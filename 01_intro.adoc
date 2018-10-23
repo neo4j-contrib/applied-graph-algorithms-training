@@ -1,0 +1,15 @@
+= Applied Graph Algorithms Training
+
+Let's try and find the most reviewed restaurants:
+
+[source,cypher]
+----
+include::queries.cql[tag=most-reviewed-restaurants]
+----
+
+And who are some interesting people?
+
+[source,cypher]
+----
+include::queries.cql[tag=interesting-reviewers]
+----
