@@ -13,3 +13,16 @@ And who are some interesting people?
 ----
 include::queries.cql[tag=interesting-reviewers]
 ----
+
+Set the `userIds` parameter
+
+[source,cypher]
+----
+include::queries.cql[tag=userids]
+----
+
+
+[source,cypher]
+----
+include::queries.cql[tag=selected-users]
+----
