@@ -55,6 +55,16 @@ WITH u, totalReviews, superCat, count(*) AS count ORDER BY u, count DESC WHERE c
 RETURN u.id, u.name, totalReviews, collect(superCat.name)[..10] AS categories
 ORDER BY totalReviews DESC;
 
+// Phoenix Reviewers
+MATCH (u:User)-[:WROTE]->()-[:REVIEWS]-(business:Business)
+WHERE (business)-[:IN_CITY]->(:City {name: "Phoenix"})
+RETURN count(distinct u);
+
+MATCH (u:User)-[:WROTE]->()-[:REVIEWS]-(business:Business)
+WHERE (business)-[:IN_CITY]->(:City {name: "Phoenix"})
+WITH distinct u
+SET u:Phoenix;
+
 // Find the top reviewers in a category
 MATCH (u:User)-[:WROTE]->()-[:REVIEWS]-(business:Business)
 WHERE (business:Business)-[:IN_CITY]->(:City {name: "Phoenix"})
@@ -86,3 +96,53 @@ RETURN other.id, other.name, count(*) AS count
 ORDER BY count DESC
 LIMIT 10;
 // end::similar-users[]
+
+
+// User similarity
+MATCH (u:User:Phoenix)
+WITH u LIMIT 100
+MATCH (business:Business)-[:IN_CITY]->(:City {name: "Phoenix"})
+OPTIONAL MATCH (u)-[:WROTE]->(review)-[:REVIEWS]->(business)
+WITH u, collect(coalesce(review.stars, 0)) AS reviews
+WITH u, [review in reviews where review > 0] AS reviews
+return id(u), size(reviews)
+
+// feature vectors for user similarity
+MATCH (business:Business)-[:IN_CITY]->(:City {name: "Phoenix"})
+WITH collect(id(business)) AS businesses
+MATCH (u:User:Phoenix)
+WITH businesses, u, [(u)-[:WROTE]->(review)-[:REVIEWS]->(business) |
+                     {item: id(business), weight: review.stars}] AS weights
+WITH u, algo.ml.featureVector(businesses, weights) AS reviews
+WITH u, [review in reviews where review > 0] AS reviews
+return id(u), size(reviews) AS reviews
+ORDER BY reviews DESC
+LIMIT 10;
+
+
+MATCH (u:User:Phoenix)
+WITH  u, [(u)-[:WROTE]->(review)-[:REVIEWS]->(business) |
+                     {id: id(business), weight: review.stars}] AS weights
+return id(u), size(weights) AS reviews, weights
+ORDER BY reviews DESC
+LIMIT 10;
+
+
+MATCH (business:Business)-[:IN_CITY]->(:City {name: "Phoenix"})
+WITH collect(id(business)) AS businesses
+MATCH (u:User:Phoenix)
+WITH businesses, collect({item: id(u), selectedValues: [(u)-[:WROTE]->(review)-[:REVIEWS]->(business) |
+                     {item: id(business), weight: review.stars}]}) AS weights
+call algo.ml.featureVector.stream(businesses, weights)
+YIELD nodeId, featureVector
+RETURN count(*);
+
+MATCH (business:Business)-[:IN_CITY]->(:City {name: "Phoenix"})
+WITH collect(id(business)) AS businesses
+MATCH (u:User:Phoenix)
+WITH businesses, u LIMIT 50000
+  WITH businesses, collect({item: id(u), selectedValues: [(u)-[:WROTE]->(review)-[:REVIEWS]->(business) |
+                       {item: id(business), weight: review.stars}]}) AS weights
+call algo.ml.featureVector.stream(businesses, weights, {concurrency: 1})
+YIELD nodeId, featureVector
+RETURN count(*);
