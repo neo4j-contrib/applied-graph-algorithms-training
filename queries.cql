@@ -146,3 +146,17 @@ WITH businesses, u LIMIT 50000
 call algo.ml.featureVector.stream(businesses, weights, {concurrency: 1})
 YIELD nodeId, featureVector
 RETURN count(*);
+
+// Cypher loading
+call algo.similarity.cosine.stream(
+  "MATCH (u)-[:WROTE]->(review)-[r:REVIEWS]->(business)
+   RETURN id(u) AS item, id(business) AS id, r.stars AS weight",
+  {graph: "cypher", skipValue: algo.NaN()});
+
+// top K similar graph for people reviewing Phoenix businesses
+CALL algo.similarity.cosine(
+    "MATCH (u:User:Phoenix) WITH u LIMIT 50000 MATCH (u)-[:WROTE]->(review:Review)-[:REVIEWS]->(business:Business)-[:IN_CITY]->(:City {name: $city})
+     RETURN id(u) AS item, id(business) AS id, review.stars AS weight",
+    {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10, skipValue: algo.NaN(), params: {city: "Phoenix"}})
+  YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
+  return *
