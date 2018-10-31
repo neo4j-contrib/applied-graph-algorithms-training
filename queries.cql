@@ -160,3 +160,29 @@ CALL algo.similarity.cosine(
     {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10, skipValue: algo.NaN(), params: {city: "Phoenix"}})
   YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
   return *
+
+// Find places near a point
+:params location => {latitude: 33.452506, longitude: -112.074791};
+
+MATCH (b:Business)
+WHERE distance(b.location, point($location)) < 500
+RETURN b.id, b.name, distance(b.location, point($location)) as distance
+ORDER BY distance
+
+// Which places should I go?
+:param userId => "vLixm38Zd-xgAvN1LQJfKQ";
+
+// Places reviewd by anybody
+MATCH (b:Business)
+WHERE distance(b.location, point($location)) < 1000
+MATCH (other:User)-[:WROTE]->(review)-[:REVIEWS]->(b:Business)
+RETURN b.id, b.name, collect(other.name) AS people, avg(review.stars) AS stars
+ORDER BY stars DESC
+LIMIT 10
+
+// Places reviewed by people similar to me
+MATCH (b:Business)
+WHERE distance(b.location, point($location)) < 1000
+MATCH (me:User {id: $userId})-[:SIMILAR]-(other)-[:WROTE]->(review)-[:REVIEWS]->(b:Business)
+RETURN b.id, b.name, collect(other.name) AS people, avg(review.stars) AS stars
+ORDER BY stars DESC
