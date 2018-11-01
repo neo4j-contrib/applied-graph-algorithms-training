@@ -8,8 +8,19 @@ In this course you will learn how to use Neo4j's Graph Algorithms library to enh
 
 == Yelp Dataset
 
-We will be using data from the https://www.yelp.com/dataset/challenge[Yelp Dataset Challenge^].
-_Add a few sentences explaining the dataset_
+https://www.yelp.com/[Yelp^] helps people find local businesses based on reviews, preferences, and recommendations.
+Over 163 million reviews have been written on the platform as of the middle of 2018.
+Yelp has been running the Yelp Dataset challenge 2 since 2013, a competition that encourages people to explore and research Yelp’s open dataset.
+
+As of Round 12 of the challenge, the open dataset contained:
+
+* Over 7 million reviews plus tips
+* Over 1.5 million users and 280,000 pictures
+* Over 188,000 businesses with 1.4 million attributes
+* 10 metropolitan areas
+
+The https://www.yelp.com/dataset/challenge[Yelp dataset^] represents real data that is very well structured and highly interconnected.
+It’s a great showcase for graph algorithms that you can also download and explore.
 
 *Put something here for them to click through so we can approve the use of the dataset*
 
