@@ -1,3 +1,10 @@
+// tag::most-reviewed-cities[]
+MATCH (c:City)
+RETURN c.name, size((c)<-[:IN_CITY]-()) AS numberOfReviews
+ORDER BY numberOfReviews DESC
+LIMIT 10;
+// end::most-reviewed-cities[]
+
 // Find the most reviewed restaurants
 // tag::most-reviewed-restaurants[]
 match (b:Business)-[:IN_CITY]->(:City {name: "Phoenix"})
@@ -27,6 +34,20 @@ ORDER BY totalReviews DESC;
 // end::interesting-reviewers[]
 
 // Calculating taxonomy
+
+// tag::compute-taxonomy-template[]
+// Fill in this part
+WITH {item:id(category),
+      categories: collect(id(business))} as userData
+WITH collect(userData) as data
+CALL algo.similarity.overlap(data, {
+  write: true, similarityCutoff: 0.75
+})
+YIELD nodes, similarityPairs, p50, p75, p90, p99
+RETURN nodes, similarityPairs, p50, p75, p90, p99;
+// end::compute-taxonomy-template[]
+
+// tag::compute-taxonomy[]
 MATCH (category:Category)
 MATCH (category)<-[:IN_CATEGORY]-(business)
 WITH {item:id(category),
@@ -37,11 +58,14 @@ CALL algo.similarity.overlap(data, {
 })
 YIELD nodes, similarityPairs, p50, p75, p90, p99
 RETURN nodes, similarityPairs, p50, p75, p90, p99;
+// end::compute-taxonomy[]
 
 // Remove transitive taxonomy
+// tag::transitive-taxonomy[]
 MATCH (g1:Category)-[:NARROWER_THAN*2..]->(g3:Category),
       (g1)-[d:NARROWER_THAN]->(g3)
 DELETE d;
+// end::transitive-taxonomy[]
 
 // Top level categories
 MATCH (u:User)-[:WROTE]->()-[:REVIEWS]-(business:Business)
@@ -155,11 +179,13 @@ call algo.similarity.cosine.stream(
 
 // top K similar graph for people reviewing Phoenix businesses
 CALL algo.similarity.cosine(
-    "MATCH (u:User:Phoenix) WITH u LIMIT 50000 MATCH (u)-[:WROTE]->(review:Review)-[:REVIEWS]->(business:Business)-[:IN_CITY]->(:City {name: $city})
+    "MATCH (u:User:Phoenix)
+     WITH u LIMIT 50000
+     MATCH (u)-[:WROTE]->(review:Review)-[:REVIEWS]->(business:Business)-[:IN_CITY]->(:City {name: $city})
      RETURN id(u) AS item, id(business) AS id, review.stars AS weight",
     {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10, skipValue: algo.NaN(), params: {city: "Phoenix"}})
-  YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
-  return *
+YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
+RETURN *
 
 // Find places near a point
 :params location => {latitude: 33.452506, longitude: -112.074791};
