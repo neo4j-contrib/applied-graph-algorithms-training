@@ -110,6 +110,18 @@ NOTE: Top level categories don't have an outgoing `NARROWER_THAN` relationship.
 
 In this section we'll learn how to use the Pearson Similarity algorithm to recommend reviews based on user similarity.
 
+[source,cypher]
+----
+include::queries.cql[tag=topk-similar-users-template]
+----
+
+And here's the answer:
+
+[source,cypher]
+----
+include::queries.cql[tag=topk-similar-users]
+----
+
 == Part 3: Most relevant reviews
 
 In this section we'll learn how to use the Personalized PageRank algorithm to return relevant businesses in search results.

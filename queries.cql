@@ -178,6 +178,7 @@ call algo.similarity.cosine.stream(
   {graph: "cypher", skipValue: algo.NaN()});
 
 // top K similar graph for people reviewing Phoenix businesses
+// tag::topk-similar-users[]
 CALL algo.similarity.cosine(
     "MATCH (u:User:Phoenix)
      WITH u LIMIT 50000
@@ -186,6 +187,16 @@ CALL algo.similarity.cosine(
     {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10, skipValue: algo.NaN(), params: {city: "Phoenix"}})
 YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
 RETURN *
+// end::topk-similar-users[]
+
+// tag::topk-similar-users-template[]
+CALL algo.similarity.cosine(
+    "// Fill in this part of the query
+     RETURN id(u) AS item, id(business) AS id, review.stars AS weight",
+    {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10, skipValue: algo.NaN(), params: {city: "Phoenix"}})
+YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
+RETURN *
+// end::topk-similar-users-template[]
 
 // Find places near a point
 :params location => {latitude: 33.452506, longitude: -112.074791};
