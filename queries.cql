@@ -182,9 +182,11 @@ call algo.similarity.cosine.stream(
 CALL algo.similarity.cosine(
     "MATCH (u:User:Phoenix)
      WITH u LIMIT 50000
-     MATCH (u)-[:WROTE]->(review:Review)-[:REVIEWS]->(business:Business)-[:IN_CITY]->(:City {name: $city})
+     MATCH (u)-[:WROTE]->(review:Review)-[:REVIEWS]->(business:Business)-[:IN_CITY]->(c:City)
+     WHERE c.name = $city
      RETURN id(u) AS item, id(business) AS id, review.stars AS weight",
-    {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10, skipValue: algo.NaN(), params: {city: "Phoenix"}})
+    {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10,
+     skipValue: algo.NaN(), params: {city: "Phoenix"}})
 YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
 RETURN *
 // end::topk-similar-users[]
@@ -193,10 +195,18 @@ RETURN *
 CALL algo.similarity.cosine(
     "// Fill in this part of the query
      RETURN id(u) AS item, id(business) AS id, review.stars AS weight",
-    {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10, skipValue: algo.NaN(), params: {city: "Phoenix"}})
+    {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10,
+     skipValue: algo.NaN(), params: {city: "Phoenix"}})
 YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
 RETURN *
 // end::topk-similar-users-template[]
+
+// tag::find-topk-similar-users[]
+MATCH (me:User {id: $userId})-[similarity:SIMILAR]-(other)
+RETURN other, similarity.score AS similarity
+ORDER BY similarity DESC
+// end::find-topk-similar-users[]
+
 
 // Find places near a point
 :params location => {latitude: 33.452506, longitude: -112.074791};

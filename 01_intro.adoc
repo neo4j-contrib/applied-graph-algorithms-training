@@ -122,6 +122,17 @@ And here's the answer:
 include::queries.cql[tag=topk-similar-users]
 ----
 
+We want to use this similarity graph to improve the reviews that we show on our application.
+We can find similar users by following the `SIMILAR` relationship from a user:
+
+[source,cypher]
+----
+include::queries.cql[tag=find-topk-similar-users]
+----
+
+Now let's update the application to use this new information.
+Instead of selecting the reviews for our businesses based on the opinions of users unrelated to `user-name`, we'll show reviews written by similar users.
+
 == Part 3: Most relevant reviews
 
 In this section we'll learn how to use the Personalized PageRank algorithm to return relevant businesses in search results.
