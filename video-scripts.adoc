@@ -1,0 +1,44 @@
+== Video Scripts for Applied Graph Algorithms Training
+
+=== Intro Video
+
+==== Goals
+==== Algorithm Buckets (Do we want to cover this?)
+==== Structure of Training
+==== Getting Help
+
+=== Part 1: Category Hierarchy Video
+
+==== Problem Situation
+==== Algorithm: Overlap Similarity
+==== Tips / Warnings? 
+==== At The End of This Part
+You should be able to...
+There will be a quiz.
+
+=== Part 2: Ordering search results
+
+==== Problem Situation
+==== Algorithm: Pearson Smiliarity
+==== Tips / Warnings?  
+==== At The End of This Part
+You should be able to...
+There will be a quiz.
+
+=== Part 3: Most relevant reviews
+
+==== Problem Situation
+==== Algorithm: LPA
+==== Tips / Warnings? 
+==== At The End of This Part
+You should be able to...
+There will be a quiz.
+
+=== Part 4: Photo based gallery recomendations
+
+==== Problem Situation
+==== Algorithm: PPR
+==== Tips / Warnings? 
+==== At The End of This Part
+You should be able to...
+There will be a quiz.
