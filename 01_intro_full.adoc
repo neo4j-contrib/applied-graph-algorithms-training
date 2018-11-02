@@ -6,6 +6,11 @@ Graph algorithms are used to compute metrics for graphs, nodes, or relationships
 They can provide insights on relevant entities (centralities, ranking) in the graph or inherent structures such as communities (community-detection, graph-partitioning, clustering).
 In this course you will learn how to use Neo4j's Graph Algorithms library to enhance your graph based applications.
 
+== Pre Requisites
+
+* Completed Intro to Neo4j training or have equal Cypher proficiency
+* Familiar with the concept of a web application
+
 == Yelp Dataset
 
 https://www.yelp.com/[Yelp^] helps people find local businesses based on reviews, preferences, and recommendations.
@@ -78,13 +83,14 @@ RETURN u.id, u.name, totalReviews, collect(cat.name)[..5] AS categories
 ORDER BY totalReviews DESC;
 ----
 
-Set the `userIds` parameter
+Let's specify those users using the `userIds` parameter
 
 [source,cypher]
 ----
 :param userIds => ["XEHZoTDWjw3w-gcQyYIe4g", "d_TBs6J3twMy9GChqUEXkg", "NwPnvTALYMNZgdiwHHkuAQ"];
 ----
 
+What places have these users been reviewing?
 
 [source,cypher]
 ----
@@ -95,8 +101,7 @@ ORDER BY u, count DESC
 RETURN u, collect({category: category.name, count: count})[..5] AS reviews;
 ----
 
-Now that we're familiar with the data we're going to build our own Yelp application based on it.
-
+Now that we're familiar with the data, let's have a brief overview of graph algorithms and what we can do with them.
 
 == Graph Algorithms
 
@@ -109,11 +114,57 @@ We have 4 types of graph algorithms:
 
 The first 3 are classic graph algorithms and the 4th can be used on its own or in combination with the other 3.
 
+== Building our own yelp.com
+
+We're going to build our own version of yelp.com using this data.
+We'll use graph algorithms to improve the quality of results in our application.
+
+The rest of the course will follow this structure:
+
+* Introduction to an algorithm
+* Learn how to execute the algorithm
+* Use the results to improve
+
 == Part 1: Category Hierarchy
 
-In this section we'll learn how to use the Overlap Similarity algorithm to navigate categories.
+In this section we're going to navigate business categories.
+Let's first have a look at the part of the application that we're going to build:
 
-We start with a list of 100 random categories but no relationships between them.
+link:#[Category Hierarchy Exercise]
+
+At the moment we have a list of 100 random categories, and making sense of the data isn't easy.
+One way that we could make things easier for our user is if we let them navigate a taxonomy of categories.
+
+This structure is already hiding in the data, we just need to extract it.
+The Overlap Similarity algorithm is the perfect choice for this type of problem.
+
+[quote]
+____
+The overlap coefficient, or Szymkiewicz–Simpson coefficient, is a similarity measure that measures the overlap between two sets.
+It is defined as the size of the intersection divided by the smaller of the size of the two sets:
+____
+
+It is computed using the following formula:
+
+image::images/overlap.svg[]
+
+If set X is a subset of Y or vice versa then the overlap coefficient is equal to one.
+
+We want to compute the similarity of categories based on the same businesses being tagged with that category.
+Let's see how the algorithm works with some dummy data.
+
+[source, cypher]
+----
+WITH [
+  {item: 1, categories: [10,11,12]},
+  {item: 2, categories: [10,11]},
+  {item: 3, categories: [11,12,13,14,15]}
+] AS data
+CALL algo.similarity.overlap.stream(data)
+YIELD item1, item2, similarity
+RETURN item1, item2, similarity
+----
+
 
 Now let's run the algorithm:
 
