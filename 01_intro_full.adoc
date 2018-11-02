@@ -6,6 +6,11 @@ Graph algorithms are used to compute metrics for graphs, nodes, or relationships
 They can provide insights on relevant entities (centralities, ranking) in the graph or inherent structures such as communities (community-detection, graph-partitioning, clustering).
 In this course you will learn how to use Neo4j's Graph Algorithms library to enhance your graph based applications.
 
+== Pre Requisites
+
+* Completed Intro to Neo4j training or have equal Cypher proficiency
+* Familiar with the concept of a web application
+
 == Yelp Dataset
 
 https://www.yelp.com/[Yelp^] helps people find local businesses based on reviews, preferences, and recommendations.
