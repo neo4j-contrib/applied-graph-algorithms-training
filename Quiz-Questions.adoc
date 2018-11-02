@@ -1,0 +1,117 @@
+== Quiz Questions for Applied Graph Algorithms Training
+
+
+=== Quiz Part 1: Category Hierarchy Video
+
+==== Algorithm Understanding: Overlap Similarity
+Question:
+
+Answers:
+* Blah
+* Blah
+
+Correct Answer: 
+
+==== Matching Results
+Question:
+
+Answers:
+* Blah
+* Blah
+
+Correct Answer: 
+
+==== Expectation Check
+Question:
+
+Answers:
+* Blah
+* Blah
+
+=== Quiz Part 2: Ordering search results
+
+==== Algorithm Understanding: Pearson Similarity
+Question:
+
+Answers:
+* Blah
+* Blah
+
+Correct Answer: 
+
+==== Matching Results
+Question:
+
+Answers:
+* Blah
+* Blah
+
+Correct Answer: 
+
+==== Expectation Check
+Question:
+
+Answers:
+* Blah
+* Blah
+
+=== Quiz Part 3: Most relevant reviews
+
+==== Algorithm Understanding: LPA
+Question:
+
+Answers:
+* Blah
+* Blah
+
+Correct Answer: 
+
+==== Matching Results
+Question:
+
+Answers:
+* Blah
+* Blah
+
+Correct Answer: 
+
+==== Expectation Check
+Question:
+
+Answers:
+* Blah
+* Blah
+
+=== Quiz Part 4: Photo based gallery recomendations
+
+==== Algorithm Understanding: Personalized PR
+Question:
+
+Answers:
+* Blah
+* Blah
+
+Correct Answer: 
+
+==== Matching Results
+Question:
+
+Answers:
+* Blah
+* Blah
+
+Correct Answer: 
+
+==== Expectation Check
+Question:
+
+Answers:
+* Blah
+* Blah
+
+==== Course Expectation Check
+Question:
+
+Answers:
+* Blah
+* Blah
