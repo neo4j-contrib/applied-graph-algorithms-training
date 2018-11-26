@@ -1,6 +1,6 @@
 == Video Scripts for Applied Graph Algorithms Training
 
-=== Intro Video
+=== Intro Video (TBD - Will create at the end, if we think it's needed)
 
 ==== Goals
 ==== Algorithm Buckets (Do we want to cover this?)
@@ -8,8 +8,15 @@
 ==== Getting Help
 
 === Part 1: Category Hierarchy Video
-
+* Now that we've explored the Yelp data a bit, we're going to take a deeper look at business categories. 
 ==== Problem Situation
+* Some of you may have noticed that there are many business categories in Yelp that seem related but aren't organized together. For example, we can safely assume some similar menu items or food styles between a business categorized as a sushi bar and another one as a ramen shop.
+* Being able to automatically group similiar businesses is essential to certain types of analysis as well as to simply navigate between types of business. 
+* The structure and heiriarchy of business categories is already hiding in the Yelp data, we just need to extract it.
+* Our challenge in this section will be take a list of a 100 random business categories and create a taxonmy that's easier for users to navigate
+
+
+
 ==== Algorithm: Overlap Similarity
 ==== Tips / Warnings? 
 ==== At The End of This Part
