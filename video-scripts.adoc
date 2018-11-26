@@ -9,19 +9,36 @@
 
 === Part 1: Category Hierarchy Video
 * Now that we've explored the Yelp data a bit, we're going to take a deeper look at business categories. 
+
 ==== Problem Situation
 * Some of you may have noticed that there are many business categories in Yelp that seem related but aren't organized together. For example, we can safely assume some similar menu items or food styles between a business categorized as a sushi bar and another one as a ramen shop.
-* Being able to automatically group similiar businesses is essential to certain types of analysis as well as to simply navigate between types of business. 
-* The structure and heiriarchy of business categories is already hiding in the Yelp data, we just need to extract it.
-* Our challenge in this section will be take a list of a 100 random business categories and create a taxonmy that's easier for users to navigate
-
-
+* We can imagine how being able to group similar businesses is essential to certain types of analysis such as finding general preferences. But it's also essential for creating intuitive navigation between types of business. 
+* Our challenge in this section is to take a list of a 100 random business categories and automatically create a taxonomy that's easier for users to traverse.
+* Since it would be tedious to do this manually on even a small dataset, we want to learn the structure and hierarchy of business categories that are already hiding in the Yelp data, using a graph algorithm.
 
 ==== Algorithm: Overlap Similarity
-==== Tips / Warnings? 
+* The Overlap Similarity algorithm is the perfect choice for this type of problem because it measures the overlap between two groups of nodes.  
+* The algorithm provides a similarity coefficient that represents the co-occurrence of items between those groups. 
+[Formula with A and B]
+* Mathematically, the coefficient is defined as the intersection divided by the smaller of the two groups.  [Should I stick to groups or sets or mix them?]
+* For example, if set A contains {Orange, Blue, Green} and set B contains {Orange, Blue, Purple, Black} then the overlap algorithm counts 2 co-occurrences {Cyan, Blue} and divides that count by the number of items in the smallest set, in this case, 3.  The resulting overlap coefficient is 2/3 which is 0.66.
+* If A contains {Orange, Blue, PURPLE} then the overlap coefficient would be 1.  
+* A coefficient of 1 indicates that either the groups are identical or more likely, that one is a subgroup of the other. 
+* Although the Overlap Similarity algorithm is also used to evaluate general similarities its use of the smaller set as a denominator makes its ideal for extracting subgroups. 
+** Identification of multiple subgroups is an effective way to develop taxonomies.  
+
+==== Tips / Warnings?
+* During the excercise, you may find bla blah [Mark / Will? Maybe we add once we're almost done.] 
+* If you get stuck, you can always refer to our documentation:
+** On the Overlap Similarity Algorithm - https://neo4j.com/docs/graph-algorithms/3.4/algorithms/similarity-overlap/
+** On the developers guide - https://neo4j.com/docs/developer-manual/current/ [Mark / Will? Anywhere specificially?] 
+* Also, please feel free to ask for help on our Community Forum https://community.neo4j.com  [Mark / Will- Can we setup a section/group on the forum for training class/questions?] 
+
 ==== At The End of This Part
-You should be able to...
-There will be a quiz.
+* By the end of this section we will have updated the user navigation to reflect top-level categorizations of Yelp businesses.
+* There will be a short quiz to evalute progress.
+* You should be able to explain what the overlap coefficient represents and be familiar with using a NARROWER_THAN relationship to build a taxonomy.
+
 
 === Part 2: Ordering search results
 
