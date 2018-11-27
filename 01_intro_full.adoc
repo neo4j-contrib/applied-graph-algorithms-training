@@ -1,6 +1,8 @@
 = Applied Graph Algorithms Training
 
-== About this course
+== Applied Graph Algorithms Training
+
+Welcome to the Neo4j Graph Algorithms Online Training Course!
 
 Graph algorithms are used to compute metrics for graphs, nodes, or relationships.
 They can provide insights on relevant entities (centralities, ranking) in the graph or inherent structures such as communities (community-detection, graph-partitioning, clustering).
@@ -32,7 +34,10 @@ image::images/yelp.svg[]
 
 == Cypher Refresher
 
+Cypher is a graph query language that we'll be using in this tutorial.
 Let's do some exploratory analysis to get a feel for the data.
+
+== Cypher Refresher: Cities
 
 We'll start by seeing which cities have the most reviews:
 
@@ -47,6 +52,8 @@ LIMIT 10;
 Las Vegas, Phoenix, and Toronto have the majority of reviews so we'll use one of those so that we have plenty of data to work with.
 We'll use Phoenix because $REASONS.
 
+== Cypher Refresher: Most Reviewed Restaurants
+
 We can find the most reviewed restaurants in Phoenix by executing the following query:
 
 [source,cypher]
@@ -59,6 +66,8 @@ RETURN b.id, b.name,
 ORDER BY reviews DESC
 LIMIT 10;
 ----
+
+== Cypher Refresher: Interesting People
 
 And who are some interesting people?
 
@@ -78,13 +87,19 @@ RETURN u.id, u.name, totalReviews, collect(cat.name)[..5] AS categories
 ORDER BY totalReviews DESC;
 ----
 
-Set the `userIds` parameter
+== Cypher Refresher: Interesting People
+
+Let's store some of those interesting users for later.
+Run the following query to store them in the `userIds` parameter:
 
 [source,cypher]
 ----
 :param userIds => ["XEHZoTDWjw3w-gcQyYIe4g", "d_TBs6J3twMy9GChqUEXkg", "NwPnvTALYMNZgdiwHHkuAQ"];
 ----
 
+== Cypher Refresher: Interesting People
+
+We can run the following query to see some of the reviews that these people have written:
 
 [source,cypher]
 ----
@@ -96,7 +111,6 @@ RETURN u, collect({category: category.name, count: count})[..5] AS reviews;
 ----
 
 Now that we're familiar with the data we're going to build our own Yelp application based on it.
-
 
 == Graph Algorithms
 
