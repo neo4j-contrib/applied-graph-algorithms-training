@@ -6,7 +6,8 @@ GUIDES=../neo4j-guides
 
 function render {
   # $GUIDES/run.sh index.adoc index.html +1 "$@"
-  $GUIDES/run.sh 01_intro_full.adoc 01_intro.html +1 "$@"
+  $GUIDES/run.sh 01_cypher_refresher.adoc 01_cypher_refresher.html +1 "$@"
+  $GUIDES/run.sh 02_category_hierarchy.adoc 02_category_hierarchy.html +1 "$@"
 }
 
 # -a env-training is a flag to enable full content, if you comment it out, the guides are rendered minimally e.g. for a presentation
