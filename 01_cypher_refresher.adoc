@@ -11,7 +11,7 @@ Let's get started!
 
 This is the graph model that we'll be working with:
 
-image::images/yelp.svg[]
+image::{img}/yelp.svg[]
 
 == Cypher Refresher
 

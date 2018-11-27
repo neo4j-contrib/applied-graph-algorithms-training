@@ -13,7 +13,7 @@ ____
 
 It is computed using the following formula:
 
-image::images/overlap.svg[]
+image::{img}/overlap.svg[]
 
 If set X is a subset of Y or vice versa then the overlap coefficient is equal to one.
 
