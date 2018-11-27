@@ -25,31 +25,53 @@ Let's see how the algorithm works with some dummy data.
 [source, cypher]
 ----
 WITH [
-  {item: 1, categories: [10,11,12]},
-  {item: 2, categories: [10,11]},
-  {item: 3, categories: [11,12,13,14,15]}
+  {item: 7, categories: [10,11,12]},
+  {item: 8, categories: [10,11]},
+  {item: 9, categories: [11,12,13,14,15]}
 ] AS data
 CALL algo.similarity.overlap.stream(data)
 YIELD item1, item2, similarity
 RETURN item1, item2, similarity
+ORDER BY similarity DESC
 ----
+
+In this dummy dataset, item `8` has a similarity score of `1.0` with item `7`, which means that item `8` is a complete subset of item `7`.
+Item `7` itself is a subset of item `9`, but it's not a complete subset as item `7` has one category that item `9` does not.
 
 == Running the algorithm on real data
 
-Now let's run the algorithm:
+Now we want to run the algorithm on the Yelp dataset.
+We need to build a collection of items like we did in our previous example, but this time the collection will consist of data from our graph rather than being hard coded.
+
+The query below provides a template for computing the Overlap Similarity of categories based on the businesses tagged with those categories.
+
 
 [source,cypher]
 ----
-include::queries.cql[tag=compute-taxonomy-template]
+// Fill in this part
+WITH {item:id(category), categories: collect(id(business))} AS userData
+WITH collect(userData) as data
+CALL algo.similarity.overlap(data, {
+  write: true, similarityCutoff: 0.75
+})
+YIELD nodes, similarityPairs, p50, p75, p90, p99
+RETURN nodes, similarityPairs, p50, p75, p90, p99;
 ----
 
 == Answer: Running the algorithm on real data
 
-And this is the answer:
+This is what the query should look like:
 
 [source,cypher]
 ----
-include::queries.cql[tag=compute-taxonomy]
+MATCH (category:Category)<-[:IN_CATEGORY]-(business)
+WITH {item:id(category), categories: collect(id(business))} AS userData
+WITH collect(userData) as data
+CALL algo.similarity.overlap(data, {
+  write: true, similarityCutoff: 0.75
+})
+YIELD nodes, similarityPairs, p50, p75, p90, p99
+RETURN nodes, similarityPairs, p50, p75, p90, p99;
 ----
 
 == Remove transitive relationships
@@ -59,7 +81,21 @@ Let's remove those transitive relationships by running the following query:
 
 [source,cypher]
 ----
-include::queries.cql[tag=transitive-taxonomy]
+MATCH (g1:Category)-[:NARROWER_THAN*2..]->(g3:Category),
+      (g1)-[d:NARROWER_THAN]->(g3)
+DELETE d;
+----
+
+== Viewing the hierarchy
+
+Let's have a look at the hierarchy that we've created.
+The following query will find 10 of these paths:
+
+[source,cypher]
+----
+MATCH path = (category:Category)-[:NARROWER_THAN*]->(superCategory:Category)
+RETURN path
+LIMIT 10
 ----
 
 Now that we've computed relationships between categories, let's go back to the CodeSandbox and update the application to only return top level categories.
