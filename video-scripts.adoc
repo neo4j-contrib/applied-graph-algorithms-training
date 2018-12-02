@@ -3,7 +3,7 @@
 === Intro Video (TBD - Will create at the end, if we think it's needed)
 
 ==== Goals
-==== Algorithm Buckets (Do we want to cover this?)
+==== Algorithm Buckets 
 ==== Structure of Training
 ==== Getting Help
 
@@ -12,28 +12,34 @@
 
 ==== Problem Situation
 {Screenshot from the first category example}
+
 * Some of you may have noticed that there are many business categories in Yelp that seem related but aren't organized together. For example, we can safely assume some similar menu items or food styles between a business categorized as a sushi bar and another one as a ramen shop.
-[Visual of sushi - ramen]
+{Visual of sushi - ramen}
+
 * We can imagine how being able to group similar businesses is essential to certain types of analysis such as finding general preferences. But it's also essential for creating intuitive navigation between types of business. 
 * Our challenge in this section is to take a list of a 100 random business categories and automatically create a taxonomy that's easier for users to traverse.
-[Screenshot from the first category example with "100" and steps]
+{Fade back to first screenshot example with "100" and graphy steps}
+
 * Since it would be tedious to do this manually on even a small dataset, we want to learn the structure and hierarchy of business categories that are already hiding in the Yelp data, using a graph algorithm.
 
 ==== Algorithm: Overlap Similarity
 * The Overlap Similarity algorithm is the perfect choice when we're trying to find the hierarchy in data and develop super and sub-categories. This is related to how it measures the overlap between two groups of nodes.  
 * The algorithm provides a similarity coefficient that represents the co-occurrence of items between those groups. 
-[Visual of the Formula with A and B]
+{Visual of the Formula with A and B}
+
 * Mathematically, the coefficient is defined as the intersection divided by the smaller of the two groups.  
-[Visual of the circles - animate below]
+{Visual of the circles - animate below}
+
 * For example, if set A contains {Orange, Blue, Green} and set B contains {Orange, Blue, Purple, Black} then the overlap algorithm counts 2 co-occurrences {Cyan, Blue} and divides that count by the number of items in the smallest set, in this case, 3.  The resulting overlap coefficient is 2/3 which is 0.66.
 * If A contains {Orange, Blue, PURPLE} then the overlap coefficient would be 1.
 * A coefficient of 1 indicates that either the groups are identical or more likely, that one is a subgroup of the other. 
-[Visual of the circles but now completely overlap. Animate?]
+{Visual of the circles but now completely overlap. Animate?}
+
 * Although the Overlap Similarity algorithm is also used to evaluate general similarities its use of the smaller set as a denominator makes its ideal for extracting subgroups. 
 ** Identification of multiple subgroups is an effective way to develop taxonomies.  
 
 ==== Tips / Warnings?
-* During the excercise, you may find bla blah [Mark / Will? Maybe we add once we're almost done.] 
+* During the excercise, you may find bla blah [*Mark / Will* Maybe we add once we're almost done?] 
 * If you get stuck, you can always refer to our documentation:
 ** On the developers guide - https://neo4j.com/docs/developer-manual/current/ 
 ** On the Overlap Similarity Algorithm - https://neo4j.com/docs/graph-algorithms/3.4/algorithms/similarity-overlap/
@@ -54,21 +60,40 @@
 * Our challenge in this section is to order reviews in a search result by the reviewers most like the user. Then we'll update the application to use this new information.
 
 ==== Algorithm: Pearson Smiliarity
-* The Pearson Smiliarity algorithm is widely used in the sciences and is particularly well-suited for recommendations based on user ratings because it takes into account the fact that different users will have different mean ratings.
+* The Pearson Smiliarity algorithm is widely used to compute how strongly two things are related, or rather correlated. It is particularly well-suited for recommendations based on user ratings because it takes into account the fact that different users will have different mean ratings.
 ** On average some users will tend to give higher ratings than others. 
 ** Since Pearson similarity considers differences in the mean, it account for these types of discrepancies.
-* The algorithm computes a similarity coefficient that measures the linear correlation between two variables, say A and B. 
-* It has a value between +1 and −1, where 1 is total a positive linear correlation, 0 is no linear correlation, and −1 is total negative linear correlation. 
+* The algorithm computes a similarity coefficient that measures the linear correlation between two variables, say A and B.
+{Algorithm visual - add in what each items means. Animate red circles to relate to below talking points.}
 
-WIP
+* In this formula, our raw observations are centered by subtracting their means and then re-scaled by a measure of standard deviations. 
+* Dividing the covariance between two variables by the product of standard deviations ensures that correlation will always fall between +1 and -1. This makes interpreting the correlation coefficient much easier and provides us both the magnitude and direction of correlation.
+{3 Line graphs with some scores for below}
 
+** The closer Peason's correlation coefficient is to +1, the more an increase in one variable associates with an increase in the other. (We can see this as a positive correlation or direction.) 
+** On the other hand, the closer to -1, the increase in one variable would result in decrease in the other. (We'd call this a negative correlation or direction.) 
+** At 0 there is no linear correlation, which means the variables are completely independent 
+** Note that a Pearson's correlation number does not equate to the slope between A and B.
+{Fade back to algorithm}
 
-
+* There are 2 caveats worth mentioning when using Pearson's similarity.
+** If we look at the formula once again, you might be able to see where it could be sensitive to the influence of extreme outlier data points that pull the mean in one direction or another. If we get unexpected results using this algorithm, this is one area to check. 
+** It's also worth noting that there is no implied causual direction in Pearson's. While this is not unique, I feel it's always good noting that correlation does not equal causation when presenting these types of results.  
+{XKCD - Cancer causes Cell Phones}
 
 ==== Tips / Warnings?  
+* During the excercise, you may find bla blah [*Mark / Will* Maybe we add once we're almost done?] 
+* If you get stuck, you can always refer to our documentation:
+** On the developers guide - https://neo4j.com/docs/developer-manual/current/ 
+** On the Pearson Similarity Algorithm - https://neo4j.com/docs/graph-algorithms/3.4/algorithms/SOMETHING
+* Also, please feel free to ask for help on our Community Forum https://community.neo4j.com/c/general/online-training 
+
 ==== At The End of This Part
-You should be able to...
-There will be a quiz.
+* By the end of this section we will have updated our app so the user search results are ordered so that the reviews of more similiar reviewers are shown at top.
+* There will be a short quiz to evalute progress.
+* You should be able to explain what the Pearson similarity algorithm is used for and what the direction and magnitude of the correlation coefficiant represents. 
+* You should also be familiar with how to set basic parameter such as a cut-off value.
+
 
 === Part 3: Most relevant reviews
 
