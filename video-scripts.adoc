@@ -11,7 +11,7 @@
 * Now that we've explored the Yelp data a bit, we're going to take a deeper look at business categories. 
 
 ==== Problem Situation
-[Screenshot from the first category example]
+{Screenshot from the first category example}
 * Some of you may have noticed that there are many business categories in Yelp that seem related but aren't organized together. For example, we can safely assume some similar menu items or food styles between a business categorized as a sushi bar and another one as a ramen shop.
 [Visual of sushi - ramen]
 * We can imagine how being able to group similar businesses is essential to certain types of analysis such as finding general preferences. But it's also essential for creating intuitive navigation between types of business. 
@@ -56,9 +56,9 @@
 ==== Algorithm: Pearson Smiliarity
 * The Pearson Smiliarity algorithm is widely used in the sciences and is particularly well-suited for recommendations based on user ratings because it takes into account the fact that different users will have different mean ratings.
 ** On average some users will tend to give higher ratings than others. 
-** Since Pearson similarity considers differences about the mean, this metric will account for these discrepancies.
-* The algorithm provides a similarity correlation coefficient with is the measure of the linear correlation between two variables X and Y. 
-* It has a value between +1 and −1, where 1 is total positive linear correlation, 0 is no linear correlation, and −1 is total negative linear correlation. 
+** Since Pearson similarity considers differences in the mean, it account for these types of discrepancies.
+* The algorithm computes a similarity coefficient that measures the linear correlation between two variables, say A and B. 
+* It has a value between +1 and −1, where 1 is total a positive linear correlation, 0 is no linear correlation, and −1 is total negative linear correlation. 
 
 WIP
 
