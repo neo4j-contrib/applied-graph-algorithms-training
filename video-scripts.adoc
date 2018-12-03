@@ -99,6 +99,7 @@
 
 ==== Problem Situation
 ==== Algorithm: LPA
+* 
 ==== Tips / Warnings? 
 ==== At The End of This Part
 You should be able to...
