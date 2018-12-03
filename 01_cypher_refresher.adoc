@@ -73,7 +73,7 @@ Run the following query to store them in the `userIds` parameter:
 
 [source,cypher]
 ----
-:param userIds => ["XEHZoTDWjw3w-gcQyYIe4g", "d_TBs6J3twMy9GChqUEXkg", "NwPnvTALYMNZgdiwHHkuAQ"];
+:param userIds => ["FiKaWcORiTyKi4I7pJp3tQ", "d_TBs6J3twMy9GChqUEXkg", "NwPnvTALYMNZgdiwHHkuAQ"]
 ----
 
 == Cypher Refresher: Interesting People
