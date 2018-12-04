@@ -85,27 +85,21 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 
 == Part 2: Ordering search results
 
-In this section we'll learn how to use the Pearson Similarity algorithm to recommend reviews based on user similarity.
+In this section we're going to improve the display of search results.
+Let's have  a look at the part of the application that we're going to build.
 
-[source,cypher]
+Open the second tab on the CodeSandbox application.
+You should be on this screen:
+
+*printscreen here*
+
+Copy the following command into the query pane of the Neo4j Browser and execute it:
+
+[source, cypher]
 ----
-include::queries.cql[tag=topk-similar-users-template]
+:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/03_search_results
 ----
 
-And here's the answer:
-
-[source,cypher]
-----
-include::queries.cql[tag=topk-similar-users]
-----
-
-We want to use this similarity graph to improve the reviews that we show on our application.
-We can find similar users by following the `SIMILAR` relationship from a user:
-
-[source,cypher]
-----
-include::queries.cql[tag=find-topk-similar-users]
-----
 
 Now let's update the application to use this new information.
 Instead of selecting the reviews for our businesses based on the opinions of users unrelated to `user-name`, we'll show reviews written by similar users.
@@ -114,6 +108,22 @@ Instead of selecting the reviews for our businesses based on the opinions of use
 
 In this section we'll learn how to use the Personalized PageRank algorithm to return relevant businesses in search results.
 
+
+Copy the following command into the query pane of the Neo4j Browser and execute it:
+
+[source, cypher]
+----
+:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/04_relevant_reviews
+----
+
 == Part 4: Photo based gallery recomendations
 
 In this section we'll learn how to use the Label Propagation algorithm to recommend photos.
+
+
+Copy the following command into the query pane of the Neo4j Browser and execute it:
+
+[source, cypher]
+----
+:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/04_relevant_reviews
+----

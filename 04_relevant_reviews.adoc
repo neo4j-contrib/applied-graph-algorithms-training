@@ -1,0 +1,5 @@
+= Finding relevant reviews
+
+== Finding relevant reviews
+
+In this section we'll learn how to use the Personalized PageRank algorithm to return relevant businesses in search results.

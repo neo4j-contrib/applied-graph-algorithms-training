@@ -1,0 +1,5 @@
+= Photo recommendations
+
+== Photo recommendations
+
+In this section we'll learn how to use the Label Propagation algorithm to recommend photos.
