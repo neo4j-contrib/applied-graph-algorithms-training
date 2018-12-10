@@ -3,3 +3,29 @@
 == Photo recommendations
 
 In this section we'll learn how to use the Label Propagation algorithm to recommend photos.
+
+== Exploring photo tags
+
+== Similar photos
+
+[source, cypher]
+----
+MATCH (p:Photo)
+MATCH (p)-[:HAS_LABEL]->(label)
+WITH {item:id(p), categories: collect(id(label))} as userData
+WITH collect(userData) as data
+CALL algo.similarity.jaccard(data, {topK: 3, similarityCutoff: 0.9, write: true})
+YIELD p25, p50, p90, p99, p999, p100,  write
+RETURN p25, p50, p90, p99, p999, p100, write
+----
+
+== Similar photos
+
+[source, cypher]
+----
+MATCH (p1:Photo)-[r:SIMILAR]->(p2:Photo)
+RETURN p1.id, r.score, p2.id
+LIMIT 10
+----
+
+== Clustering photos

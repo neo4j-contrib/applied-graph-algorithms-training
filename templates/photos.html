@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<title>{% block title %}{% endblock %} - Flaskr</title>
+</head>
+
+<body>
+
+  <table>
+
+        <tr>
+        <th>Photo 1</th>
+        <th>Photo 2</th>
+        <th>Similarity</th>
+        </tr>
+
+
+    {% for photo in photos %}
+      <tr>
+        <td>
+      <p><img src="https://s3.amazonaws.com/yelp-photos.neo4j.com/{{ photo.p1 }}.jpg" /> </p>
+      <p>{{photo.p1}}</p>
+        <p>{{photo.p1Labels}}</p>
+      </td>
+        <td>
+          <p><img src="https://s3.amazonaws.com/yelp-photos.neo4j.com/{{ photo.p2 }}.jpg" /><p>
+          <p>{{photo.p2}}</p>
+          <p>{{photo.p2Labels}}</p>
+        </td>
+        <td>{{photo.score}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  </body>
+
+  </html>

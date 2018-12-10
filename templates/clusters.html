@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<title>{% block title %}{% endblock %} - Flaskr</title>
+
+<style>
+ul {
+    margin: 0 auto;
+    text-align: center;
+}
+
+li {
+    display: inline-block;
+    vertical-align: top;
+}
+</style>
+
+</head>
+
+<body>
+
+<ul>
+
+    {% for photo in photos %}
+      <li>
+      <p><img src="https://s3.amazonaws.com/yelp-photos.neo4j.com/{{ photo.p1 }}.jpg" /> </p>
+      <p>{{photo.p1}}</p>
+        <p>{{photo.p1Labels}}</p>
+      </li>
+    {% endfor %}
+</ul>
+
+  </body>
+
+  </html>
