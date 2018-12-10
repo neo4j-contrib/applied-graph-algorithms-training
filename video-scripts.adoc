@@ -54,7 +54,7 @@
 === Part 2: Ordering search results
 * Now that we've have a good navigation for users that next thing we'd like to do is show more relevant information to our users.
 
-==== Problem Situation
+==== Problem Situation 
 * Like so many reviews sites, there is a lot of information in Yelp to sift through. It would be best to develop a way to show users information that's most relevant to them personally.
 * For example, instead of selecting the reviews for businesses based on the opinions of reviwers unrelated to the users, we want to show reviews written by someone similar. 
 * Our challenge in this section is to order reviews in a search result by the reviewers most like the user. Then we'll update the application to use this new information.
@@ -96,20 +96,61 @@
 
 
 === Part 3: Most relevant reviews
-
 ==== Problem Situation
-==== Algorithm: LPA
-* 
+* By now we've improved our app to be easier to navigate and ordered reviews by people who tend to rate things the way the user does. But there's more we can do to bubble up the businesses we think the user will like, as a form of recommendation.
+* Our challenge in this section will be to show business results based on the positive reviews of influential users in the Yelp network. 
+** Influential reviewers tend to be predictive of which businsses will be reviewed by others, which we're using as a stand in for predicting becoming a customer.
+* Also, as opposed to looking at all possible influential reviewers we only want to take into account those that are closer to our user in the network. 
+
+==== Algorithm: PPR
+* The Personalized PageRank algorithm is a variation of PageRank that is handy for recommendations. But let's start with PageRank itself, which is probably the best known centrality algorithms
+* PageRank measures the transitive (or directional) influence of nodes and considers the influence of your neighbors and their neighbors. 
+* An example of this type of influence might be having the ear of a general that considers you very credible will likely make you more powerful than being really popular with your fellow foot soldiers. 
+* PageRank measure importance in comparision to other nodes using an iterative process to update ranks.
+{Triangle Picture}
+* It starts by assigning values to nodes as 1/n (n is the total number of nodes linked to) and value to relationships as that nodes value / # of it's outgoing links. 
+* It then starts to update values for nodes as the sum of the prior in-link values. The relationship values are updated the same way they were initially assigned. 
+* PageRank then continues to update values until an iterate value is reached. 
+{Formula with elements defined}
+* In the formula for PageRank, T1...Tn are the nodes with incomming links to u. We can see that the value of those nodes are divided by C - the parameter their own outgoing links.
+* A dampending factor, d, is added to help keep PR from getting dragged down into loops and tangents (and deadends). The dampending factor is the probably that the next step of the algorithm will follow a direct path. It's basically the opposite of a random skip to another node. 
+* For example, the standard dampening of 0.85 means on each next caluclation there is a 15% chance the algorithm will look at a random node, not directly connected to where it is at that moment. 
+* The dampending factor is how Personalized PageRank becomes, well, personalized. You see, intead of randomly skipping to node in the graph, in PPR, it will hop back to a particular set of nodes you identify.  This give us a look at the influence in the graph that's never too far way from our starting point. 
+* And of course, we can tailor our results by changing the dampending factor and the number of SourceNodes.
+{picture ?}
+* So we can see why PPR is particuliarly useful where you're looking for influential elements in an area surrounding a node. 
+* This approach is different from similarity algorithms that look for how common nodes of the same type are.
+* It's also different than community detection algorithms that are looking for groupings. 
+
 ==== Tips / Warnings? 
+* During the excercise, you may find bla blah [*Mark / Will* Maybe we add once we're almost done?] 
+* If you get stuck, you can always refer to our documentation:
+** On the developers guide - https://neo4j.com/docs/developer-manual/current/ 
+** On the Personalized PageRank Algorithm - https://neo4j.com/docs/graph-algorithms/3.4/algorithms/page-rank/
+* Also, please feel free to ask for help on our Community Forum https://community.neo4j.com/c/general/online-training 
+
 ==== At The End of This Part
-You should be able to...
-There will be a quiz.
+* By the end of this section we will have
+//updated the user navigation to reflect top-level categorizations of Yelp businesses.--
+* There will be a short quiz to evalute progress.
+* You should be able to
+//explain what the overlap coefficient represents and be familiar with using a NARROWER_THAN relationship to build a taxonomy.
+
 
 === Part 4: Photo based gallery recomendations
 
 ==== Problem Situation
-==== Algorithm: PPR
+==== Algorithm: LPA
 ==== Tips / Warnings? 
+* During the excercise, you may find bla blah [*Mark / Will* Maybe we add once we're almost done?] 
+* If you get stuck, you can always refer to our documentation:
+** On the developers guide - https://neo4j.com/docs/developer-manual/current/ 
+** On the Label Propagation Algorithm - https://neo4j.com/docs/graph-algorithms/3.4/algorithms/label-propagation/
+* Also, please feel free to ask for help on our Community Forum https://community.neo4j.com/c/general/online-training 
+
 ==== At The End of This Part
-You should be able to...
-There will be a quiz.
+* By the end of this section we will have
+//updated the user navigation to reflect top-level categorizations of Yelp businesses.--
+* There will be a short quiz to evalute progress.
+* You should be able to
+//explain what the overlap coefficient represents and be familiar with using a NARROWER_THAN relationship to build a taxonomy.
