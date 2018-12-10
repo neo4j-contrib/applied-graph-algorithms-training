@@ -103,21 +103,30 @@
 * Also, as opposed to looking at all possible influential reviewers we only want to take into account those that are closer to our user in the network. 
 
 ==== Algorithm: PPR
-* The Personalized PageRank algorithm is a variation of PageRank that is handy for recommendations. But let's start with PageRank itself, which is probably the best known centrality algorithms
+* The Personalized PageRank algorithm is a variation of PageRank that is handy for recommendations. But let's start with PageRank itself, which is probably the best known centrality algorithms. It's been used in a wide range of analysis about overall and indirect influence in networks from foodwebs to connections in the brain and of course, ranking webpages.
+
+{A few PR new screen shots]
+
 * PageRank measures the transitive (or directional) influence of nodes and considers the influence of your neighbors and their neighbors. 
 * An example of this type of influence might be having the ear of a general that considers you very credible will likely make you more powerful than being really popular with your fellow foot soldiers. 
 * PageRank measure importance in comparision to other nodes using an iterative process to update ranks.
+
 {Triangle Picture}
+
 * It starts by assigning values to nodes as 1/n (n is the total number of nodes linked to) and value to relationships as that nodes value / # of it's outgoing links. 
 * It then starts to update values for nodes as the sum of the prior in-link values. The relationship values are updated the same way they were initially assigned. 
 * PageRank then continues to update values until an iterate value is reached. 
+
 {Formula with elements defined}
+
 * In the formula for PageRank, T1...Tn are the nodes with incomming links to u. We can see that the value of those nodes are divided by C - the parameter their own outgoing links.
 * A dampending factor, d, is added to help keep PR from getting dragged down into loops and tangents (and deadends). The dampending factor is the probably that the next step of the algorithm will follow a direct path. It's basically the opposite of a random skip to another node. 
 * For example, the standard dampening of 0.85 means on each next caluclation there is a 15% chance the algorithm will look at a random node, not directly connected to where it is at that moment. 
 * The dampending factor is how Personalized PageRank becomes, well, personalized. You see, intead of randomly skipping to node in the graph, in PPR, it will hop back to a particular set of nodes you identify.  This give us a look at the influence in the graph that's never too far way from our starting point. 
 * And of course, we can tailor our results by changing the dampending factor and the number of SourceNodes.
+
 {picture ?}
+
 * So we can see why PPR is particuliarly useful where you're looking for influential elements in an area surrounding a node. 
 * This approach is different from similarity algorithms that look for how common nodes of the same type are.
 * It's also different than community detection algorithms that are looking for groupings. 
@@ -130,17 +139,23 @@
 * Also, please feel free to ask for help on our Community Forum https://community.neo4j.com/c/general/online-training 
 
 ==== At The End of This Part
-* By the end of this section we will have
-//updated the user navigation to reflect top-level categorizations of Yelp businesses.--
+* By the end of this section we will have updated the search results to highlight the Yelp businesses with good ratings from other users with a high personalized pageRank score for the user searching.
 * There will be a short quiz to evalute progress.
-* You should be able to
-//explain what the overlap coefficient represents and be familiar with using a NARROWER_THAN relationship to build a taxonomy.
+* You should be able to explain why PPR is used for recommendations and how it's different than PageRank itself. 
+* You may also want to familiarize yourself with how changing some parameters and source nodes can change your results. 
 
 
 === Part 4: Photo based gallery recomendations
 
 ==== Problem Situation
+* Now we know everyone likes photos so we're going to have some fun with the pictures as a way to recommend other businesses.
+* Our hypothesis for this section is that similar photos get uploaded for similiar businesses. And we've taken the liberty of tagging photos of 30K Yelp reviews using Google's SOMETHING
+* Our challenge will be to enable users to select an image they like and then show them similarly tagged images.
+
 ==== Algorithm: LPA
+* The Label Propagation algorithm is a great choice for fast grouping at scale. 
+
+
 ==== Tips / Warnings? 
 * During the excercise, you may find bla blah [*Mark / Will* Maybe we add once we're almost done?] 
 * If you get stuck, you can always refer to our documentation:
