@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<title>{% block title %}{% endblock %} - Flaskr</title>
+
+<style>
+ul {
+    margin: 0 auto;
+    text-align: center;
+}
+
+li {
+    display: inline-block;
+    vertical-align: top;
+}
+</style>
+
+</head>
+
+<body>
+<table>
+
+          <tr>
+          <th>Cluster</th>
+          <th>Photos</th>
+          </tr>
+
+
+      {% for cluster in clusters %}
+        <tr>
+          <td>
+            <a href="/clusters/{{cluster.community}}">{{cluster.community}}</a>
+        </td>
+          <td>
+            {{ cluster.c }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  </body>
+
+  </html>

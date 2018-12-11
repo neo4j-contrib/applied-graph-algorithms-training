@@ -29,3 +29,8 @@ LIMIT 10
 ----
 
 == Clustering photos
+
+[source, cypher]
+----
+CALL algo.labelPropagation("Photo", "SIMILAR", {direction: "BOTH"})
+----
