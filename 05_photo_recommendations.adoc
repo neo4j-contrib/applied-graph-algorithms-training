@@ -63,18 +63,46 @@ RETURN p25, p50, p90, p99, p999, p100, write
 
 == Similar photos
 
-Now let's see if we
+Now let's have a look at the relationships created by the algorithm.
+Run the following query:
 
 [source, cypher]
 ----
-MATCH (p1:Photo)-[r:SIMILAR]->(p2:Photo)
-RETURN p1.id, r.score, p2.id
-LIMIT 10
+MATCH path = (p1:Photo)-[r:SIMILAR]->(p2:Photo)
+RETURN path
+LIMIT 20
 ----
 
 == Clustering photos
+
+Now we're going to cluster photos based on the `SIMILAR` relationships.
+Update the following query to do this:
+
+[source, cypher]
+----
+CALL algo.labelPropagation(<nodel-label>, <relationship-type>, {direction: "BOTH"})
+----
+
+== Answer: Clustering photos
+
+This is what the query should look like:
 
 [source, cypher]
 ----
 CALL algo.labelPropagation("Photo", "SIMILAR", {direction: "BOTH"})
 ----
+
+== Explore photo clusters
+
+Let's see how many photos we have in each cluster.
+We can run the following query to compute this:
+
+[source, cypher]
+----
+MATCH (p:Photo)
+RETURN p.partition AS partition, count(*) AS count
+ORDER BY count DESC
+LIMIT 10
+----
+
+Now let's go back to our application and use these clusters to make photo recommendations.
