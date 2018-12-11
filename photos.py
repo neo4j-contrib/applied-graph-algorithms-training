@@ -22,12 +22,26 @@ def photos():
 
     return render_template('photos.html', photos=photos)
 
+@app.route("/clusters/")
+def all_clusters():
+    with driver.session() as session:
+        rows = session.run("""
+        MATCH (p:Photo)
+        RETURN p.community AS community, count(*) AS c
+        ORDER BY c DESC
+        LIMIT 50
+        """)
+        clusters = [cluster for cluster in rows]
+        return render_template('all_clusters.html', clusters=clusters)
+
 @app.route("/clusters/<cluster_id>")
 def clusters(cluster_id):
     with driver.session() as session:
         rows = session.run("""
-        MATCH (p:Photo {partition: {clusterId}})
-        RETURN p.id AS p1
+        MATCH (p:Photo {community: {clusterId}})
+        RETURN p.id AS p1,
+               [(p)<-[:HAS_PHOTO]-(business) | business.name][0] AS business,
+               [(p)-[:HAS_LABEL]->(label) | label.description] AS labels
         """, {"clusterId": int(cluster_id)})
 
         photos = [row for row in rows]
