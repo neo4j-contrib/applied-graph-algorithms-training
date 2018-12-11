@@ -224,11 +224,13 @@ class BusinessSearch extends Component {
         /> */}
         </Paper>
 
-        <BusinessDetails
-          business={this.state.selectedBusiness}
-          open={this.state.showBusiness}
-          handleClose={this.handleClose}
-        />
+        {this.state.showBusiness ? (
+          <BusinessDetails
+            business={this.state.selectedBusiness}
+            open={this.state.showBusiness}
+            handleClose={this.handleClose}
+          />
+        ) : null}
       </div>
     );
   }
