@@ -128,7 +128,7 @@ class App extends Component {
     this.state = {
       selectedView: "BusinessSearch",
       open: true,
-      
+      selectedUser: "XEHZoTDWjw3w-gcQyYIe4g"
     };
 
   
@@ -144,6 +144,13 @@ class App extends Component {
     this.setState({ open: true });
   };
 
+  handleUserChange = user => {
+    this.setState({
+      selectedUser: user
+    })
+    console.log("CHANGED USER");
+    console.log(user);
+  }
 
   handleChange = name => event => {
 
@@ -204,7 +211,7 @@ class App extends Component {
     const page = parseInt(this.state.page);
 
     return (
-      <React.Fragment>
+      <div>
         <CssBaseline />
         <div className={classes.root}>
           <AppBar
@@ -237,7 +244,7 @@ class App extends Component {
                 noWrap
                 className={classes.title}
               >
-                Applied Algorithms
+                Applied Graph Algorithms With Neo4j
               </Typography>
 
               
@@ -299,19 +306,30 @@ class App extends Component {
 
             <Typography component="div" className={classes.chartContainer}>
               {this.state.selectedView === "UserProfile" ? (
-               <UserProfile />
+               <UserProfile 
+                selectedUser={this.state.selectedUser}
+                handleUserChange={this.handleUserChange}
+                
+               />
               ) : null}
               {this.state.selectedView === "BusinessSearch" ? (
-                <BusinessSearch />
+                <BusinessSearch 
+                  selectedUser={this.state.selectedUser}
+                />
               ) : null}
             
-              {this.state.selectedView === "Photos" ? <Photos /> : null}
+              {this.state.selectedView === "Photos" ? (
+              <Photos 
+                selectedUser={this.state.selectedUser}
+              />
+              
+              ) : null}
               
            
             </Typography>
           </main>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

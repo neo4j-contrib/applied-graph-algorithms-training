@@ -1,12 +1,30 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
-import { Paper, TextField, MenuItem, Grid } from "@material-ui/core";
+import {
+  Paper,
+  TextField,
+  MenuItem,
+  Grid,
+  Dialog,
+  AppBar,
+  Toolbar,
+  Slide,
+  IconButton,
+  Typography,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Divider
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import BusinessCard from "./BusinessCard";
+import BusinessDetails from "./BusinessDetails";
 import { driver } from "./neo4j";
 import BusinessModal from "./BusinessModal";
-import { FETCH_CATEGORIES_QUERY } from "./exercises/exercise1"
-import { FETCH_BUSINESSES_QUERY } from "./exercises/exercise2"
+import { FETCH_CATEGORIES_QUERY } from "./exercises/exercise1";
+import { FETCH_BUSINESSES_QUERY } from "./exercises/exercise2";
 
 const styles = theme => ({
   container: {
@@ -37,6 +55,10 @@ const styles = theme => ({
   }
 });
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
+
 class BusinessSearch extends Component {
   constructor(props) {
     super(props);
@@ -45,7 +67,8 @@ class BusinessSearch extends Component {
       businesses: [],
       categories: [],
       showBusiness: false,
-      selectedBusiness: null
+      selectedBusiness: null,
+      open: false
     };
 
     this.timeout = null;
@@ -58,14 +81,24 @@ class BusinessSearch extends Component {
     if (name === "searchText") {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
-        this.setState({
-          [name]: val
-        }, () => {this.fetchBusinesses()});
+        this.setState(
+          {
+            [name]: val
+          },
+          () => {
+            this.fetchBusinesses();
+          }
+        );
       }, 500);
     } else {
-      this.setState({
-        [name]: event.target.value
-      }, () => {this.fetchBusinesses()});
+      this.setState(
+        {
+          [name]: event.target.value
+        },
+        () => {
+          this.fetchBusinesses();
+        }
+      );
     }
   };
 
@@ -110,24 +143,29 @@ class BusinessSearch extends Component {
       });
   };
 
-  businessCardSelected = (business) => {
+  businessCardSelected = business => {
     console.log("SHOW BUSINESS");
     console.log(business);
 
     this.setState({
-        showBusiness: true,
-        selectedBusiness: business
-    })
-        
-  }
+      showBusiness: true,
+      selectedBusiness: business,
+      open: true
+    });
+  };
 
-  shouldComponentUpdate(nextProps, nextState) {
-      if (nextState.showBusiness !== this.state.showBusiness) {
-          return false;
-      } else {
-          return true;
-      }
-  }
+  handleClose = () => {
+    this.setState({ showBusiness: false, selectedBusiness: null, open: false });
+    console.log("handle close");
+  };
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //     if (nextState.showBusiness !== this.state.showBusiness) {
+  //         return false;
+  //     } else {
+  //         return true;
+  //     }
+  // }
 
   render() {
     const { classes } = this.props;
@@ -148,7 +186,7 @@ class BusinessSearch extends Component {
             <TextField
               id="outlined-select-currency"
               select
-            //   label="Select"
+              //   label="Select"
               className={classes.textField}
               value={this.state.category}
               onChange={this.handleChange("category")}
@@ -173,18 +211,23 @@ class BusinessSearch extends Component {
           <Grid container spacing={24}>
             {this.state.businesses.map(b => (
               <Grid item xs={6} md={3} key={b.id}>
-                <BusinessCard 
-                    business={b}
-                    cardClicked={this.businessCardSelected}
-                    
+                <BusinessCard
+                  business={b}
+                  cardClicked={this.businessCardSelected}
                 />
               </Grid>
             ))}
           </Grid>
-        </Paper>
-        <BusinessModal 
+          {/* <BusinessModal 
             open={this.state.showBusiness}
             business={this.state.selectedBusiness}
+        /> */}
+        </Paper>
+
+        <BusinessDetails
+          business={this.state.selectedBusiness}
+          open={this.state.showBusiness}
+          handleClose={this.handleClose}
         />
       </div>
     );
