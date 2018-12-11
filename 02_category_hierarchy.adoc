@@ -43,17 +43,26 @@ Item `7` itself is a subset of item `9`, but it's not a complete subset as item 
 Now we want to run the algorithm on the Yelp dataset.
 We need to build a collection of items like we did in our previous example, but this time the collection will consist of data from our graph rather than being hard coded.
 
-The query below provides a template for computing the Overlap Similarity of categories based on the businesses tagged with those categories.
+The query below provides a template for computing the https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity-overlap/#algorithms-similarity-overlap-sample[Overlap Similarity^] of categories based on the businesses tagged with those categories.
+Update the query (copied from the documentation) to:
 
+* Compute similarity between photos based on the labels they have (Hint: you'll need to use the `HAS_LABEL` relationship)
+* Choose a similarity cut off value (Hint: look at the `similarityCutOff` parameter)
+* Store the results in Neo4j (Hint: look at the `write` parameter)
 
 [source,cypher]
 ----
-// Fill in this part
-WITH {item:id(category), categories: collect(id(business))} AS userData
+// Change this part of the query
+MATCH (book:Book)-[:HAS_GENRE]->(genre)
+WITH {item:id(genre), categories: collect(id(book))} as userData
+
 WITH collect(userData) as data
+
+// Fill in the config in this part of the query
 CALL algo.similarity.overlap(data, {
-  write: true, similarityCutoff: 0.75
+
 })
+
 YIELD nodes, similarityPairs, p50, p75, p90, p99
 RETURN nodes, similarityPairs, p50, p75, p90, p99;
 ----
@@ -66,10 +75,13 @@ This is what the query should look like:
 ----
 MATCH (category:Category)<-[:IN_CATEGORY]-(business)
 WITH {item:id(category), categories: collect(id(business))} AS userData
+
 WITH collect(userData) as data
+
 CALL algo.similarity.overlap(data, {
   write: true, similarityCutoff: 0.75
 })
+
 YIELD nodes, similarityPairs, p50, p75, p90, p99
 RETURN nodes, similarityPairs, p50, p75, p90, p99;
 ----

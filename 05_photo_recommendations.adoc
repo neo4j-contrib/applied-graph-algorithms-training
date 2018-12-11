@@ -8,18 +8,52 @@ In this section we'll learn how to use the Label Propagation algorithm to recomm
 
 == Similar photos
 
+We want to work out which photos are similar to each other based on the labels they've been tagged with.
+We can do this using the https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity-jaccard/#algorithms-similarity-jaccard-sample[Jaccard Similarity algorithm^].
+
+Update the following query (copied from the documentation) to:
+
+* Compute similarity between photos based on the labels they have (Hint: you'll need to use the `HAS_LABEL` relationship)
+* Find the top 3 most similar photos (Hint: look at the `topK` parameter)
+* Store the results in Neo4j (Hint: look at the `write` parameter)
+
 [source, cypher]
 ----
-MATCH (p:Photo)
-MATCH (p)-[:HAS_LABEL]->(label)
-WITH {item:id(p), categories: collect(id(label))} as userData
+// Change this part of the query
+MATCH (p:Person)-[:LIKES]->(cuisine)
+WITH {item:id(p), categories: collect(id(cuisine))} as userData
+
 WITH collect(userData) as data
+
+// Fill in the config in this part of the query
+CALL algo.similarity.jaccard(data, {
+
+})
+
+YIELD p25, p50, p90, p99, p999, p100,  write
+RETURN p25, p50, p90, p99, p999, p100, write
+----
+
+== Answer: Similar Photos
+
+This is what the query should look like:
+
+[source, cypher]
+----
+MATCH (p:Photo)-[:HAS_LABEL]->(label)
+WITH {item:id(p), categories: collect(id(label))} as userData
+
+WITH collect(userData) as data
+
 CALL algo.similarity.jaccard(data, {topK: 3, similarityCutoff: 0.9, write: true})
+
 YIELD p25, p50, p90, p99, p999, p100,  write
 RETURN p25, p50, p90, p99, p999, p100, write
 ----
 
 == Similar photos
+
+Now let's see if we
 
 [source, cypher]
 ----
