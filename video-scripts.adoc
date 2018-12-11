@@ -154,7 +154,21 @@
 
 ==== Algorithm: LPA
 * The Label Propagation algorithm is a great choice for fast grouping at scale. 
+* In LPA the nodes select their group based on their direct neighbors using the node labels. 
+* The idea is that a single label can quickly become dominant in a densely connected group of nodes, but it will have trouble crossing a sparsely connected region. 
+* LPA is well suited where groupings are less clear and weights can be used to help determine which community to place a node in. 
 
+{Diagram of LPA PULL}
+
+* In Neo4j we use the pull or voting mechnism for Label propagration
+* First Every node is initialized with a unique label for unsupervised learning. However, LPA also lends itself well to semi- supervised learning because you can seed the process with pre-assigned, node labels that you know are predictive.
+** In this example we have started with 2 A nodes but left all other's unique.  We are also going with the node default weights of 1. 
+* Nodes are then processed randomly with each node aquiring the label of it's neighbor with the maximun weight. So in the first iteration the left A aquires the label F, B aquires the label D, and C now becomes A. 
+* The maximum weight is calculated based on the weights of neighbor nodes and their relationships. And Ties are broken uniformly and randomly.
+** Notice that there will be times when a label is not updated because the neighbor with the max weight has the same lable.
+* Iterations continue until each node has the majority label of its neighbors. Unless we set a max iteration limit. A max iteration limit will prevent endless cycles where the alorithm can't converge on a solution, essentially getting caught in a flip-flop cycle for some labels. 
+
+* In contrast to other algorithms, Label Propagation can return different community structures when run multiple times on the same graph. The order in which LPA evaluates nodes can have an influence on the final communities it returns. The range of solutions is narrowed when some nodes are given preliminary labels (i.e., seed labels), while others are unlabeled. Unlabeled nodes are more likely to adopt the preliminary labels.
 
 ==== Tips / Warnings? 
 * During the excercise, you may find bla blah [*Mark / Will* Maybe we add once we're almost done?] 
@@ -164,8 +178,7 @@
 * Also, please feel free to ask for help on our Community Forum https://community.neo4j.com/c/general/online-training 
 
 ==== At The End of This Part
-* By the end of this section we will have
-//updated the user navigation to reflect top-level categorizations of Yelp businesses.--
+* By the end of this section we will have added a way to recommend similiar businesses based on the users picture preference.
 * There will be a short quiz to evalute progress.
-* You should be able to
-//explain what the overlap coefficient represents and be familiar with using a NARROWER_THAN relationship to build a taxonomy.
+* You should understand what weights are used to assign labels for label propgation and how to avoid or correct an endless cycle.
+* You should also be familiar with why seed labels are sometimes used.
