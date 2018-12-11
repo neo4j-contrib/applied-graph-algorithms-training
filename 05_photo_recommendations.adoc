@@ -2,9 +2,19 @@
 
 == Photo recommendations
 
-In this section we'll learn how to use the Label Propagation algorithm to recommend photos.
+In this section we'll learn how to use the Label Propagation algorithm to cluster similar photos.
 
 == Exploring photo tags
+
+The photos have been run through Google's Image Labeling service and those labels are connected to photos by the `HAS_LABEL` relationship.
+We can run the following query to explore this part of the graph:
+
+[source, cypher]
+----
+MATCH path = (p:Photo)-[:HAS_LABEL]->(label)
+RETURN path
+LIMIT 25
+----
 
 == Similar photos
 

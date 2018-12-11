@@ -46,7 +46,7 @@ We need to build a collection of items like we did in our previous example, but 
 The query below provides a template for computing the https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity-overlap/#algorithms-similarity-overlap-sample[Overlap Similarity^] of categories based on the businesses tagged with those categories.
 Update the query (copied from the documentation) to:
 
-* Compute similarity between photos based on the labels they have (Hint: you'll need to use the `HAS_LABEL` relationship)
+* Compute similarity between categories based on the business tagged with that category (Hint: you'll need to use the `IN_CATEGORY` relationship)
 * Choose a similarity cut off value (Hint: look at the `similarityCutOff` parameter)
 * Store the results in Neo4j (Hint: look at the `write` parameter)
 
