@@ -48,8 +48,8 @@ const BusinessCard = props => {
       
         <CardMedia
           className={classes.media}
-          image={"https://s3.amazonaws.com/yelp-photos.neo4j.com/" + props.business.photo + ".jpg"} 
-          title={"business image"}
+          image={"https://s3.amazonaws.com/yelp-photos.neo4j.com/" + `${props.business.photo ? props.business.photo + ".jpg" : "default.png"}`} 
+          title={props.business.name}
         >
           
         </CardMedia>
