@@ -149,8 +149,13 @@
 
 ==== Problem Situation
 * Now we know everyone likes photos so we're going to have some fun with the pictures as a way to recommend other businesses.
-* Our hypothesis for this section is that similar photos get uploaded for similiar businesses. And we've taken the liberty of tagging photos of 30K Yelp reviews using Google's SOMETHING
-* Our challenge will be to enable users to select an image they like and then show them similarly tagged images.
+* Our hypothesis for this section is that similar photos get uploaded for similiar businesses. 
+* Our goal is to enable users to select an image they like and then show them businesses with similarly images. The idea is to create photo based recommendations.
+* We've taken the liberty of tagging photos of 30K Yelp reviews using Google's SOMETHING
+* In this section we'll need to first identify photos that are similiar and then group them. 
+
+==== Algorithm: Jaccard Similarity
+
 
 ==== Algorithm: LPA
 * The Label Propagation algorithm is a great choice for fast grouping at scale. 
@@ -180,5 +185,6 @@
 ==== At The End of This Part
 * By the end of this section we will have added a way to recommend similiar businesses based on the users picture preference.
 * There will be a short quiz to evalute progress.
-* You should understand what weights are used to assign labels for label propgation and how to avoid or correct an endless cycle.
-* You should also be familiar with why seed labels are sometimes used.
+* You should be able to explain the basic difference between Jaccard Similarity and Overlap Similarity
+* You should also understand how weights are used to assign labels for label propgation and why seed labels are sometimes used.
+
