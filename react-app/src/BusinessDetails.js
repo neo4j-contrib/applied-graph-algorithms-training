@@ -1,54 +1,84 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Paper, TextField, MenuItem, Grid, Dialog, AppBar, Toolbar, Slide, IconButton, Typography, Button, List, ListItem, ListItemText, Divider } from "@material-ui/core";
-import CloseIcon from '@material-ui/icons/Close';
+import {
+  Paper,
+  TextField,
+  MenuItem,
+  Grid,
+  Dialog,
+  AppBar,
+  Toolbar,
+  Slide,
+  IconButton,
+  Typography,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Divider
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import { FETCH_REVIEWS_QUERY } from "./exercises/exercise3";
 
 import { driver } from "./neo4j";
 
 const styles = theme => ({
-    appBar: {
-        position: 'relative',
-      },
-      flex: {
-        flex: 1,
-      },
+  appBar: {
+    position: "relative"
+  },
+  flex: {
+    flex: 1
+  }
 });
 
 function Transition(props) {
-    return <Slide direction="up" {...props} />;
-  }
+  return <Slide direction="up" {...props} />;
+}
+
+function stars(count) {
+    return [...Array(count).keys()].reduce((acc, v) => {
+        return acc + "⭐";
+    }, "")
+}
 
 class BusinessDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      reviews: []
     };
+    if (props.open) {
+      console.log("FETCH REVIEWS");
+      this.fetchReviews();
+    } else {
+      //this.fetchReviews();
+    }
   }
 
   fetchReviews = () => {
-      const session = driver.session();
-      session.run(FETCH_REVIEWS_QUERY, {
-          businessId: this.props.business.id
+    const session = driver.session();
+    session
+      .run(FETCH_REVIEWS_QUERY, {
+        businessId: this.props.business.id
       })
       .then(result => {
-          const record = result.records[0];
-          const reviews = record.get("reviews");
-          this.setState({
-              reviews
-          });
+        const record = result.records[0];
+        const reviews = record.get("reviews");
+        console.log(reviews);
+        this.setState({
+          reviews
+        });
       })
       .catch(e => {
-          console.log(e);
+        console.log(e);
       })
       .finally(() => {
-          session.close();
-      })
-  }
+        session.close();
+      });
+  };
 
   render() {
-      const { classes } = this.props;
+    const { classes } = this.props;
 
     return (
       <Dialog
@@ -72,16 +102,16 @@ class BusinessDetails extends Component {
           </Toolbar>
         </AppBar>
         <List>
-          <ListItem button>
-            <ListItemText primary="Text of review here" secondary="name of reviewer here" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText
-              primary="Some other review here"
-              secondary="Name of reviewer"
-            />
-          </ListItem>
+          {this.state.reviews.map(r => {
+            return (
+              <div>
+                <ListItem button key={r.id}>
+                  <ListItemText primary={stars(r.stars) + " " + r.text} secondary={r.name + " " + r.date} />
+                </ListItem>
+                <Divider />
+              </div>
+            );
+          })}
         </List>
       </Dialog>
     );

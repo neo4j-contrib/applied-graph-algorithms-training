@@ -7,9 +7,14 @@ import { FETCH_USER_INFO_QUERY } from "./exercises/exercise0";
 
 const styles = theme => ({});
 const userPersonas = [
-  "XEHZoTDWjw3w-gcQyYIe4g",
-  "d_TBs6J3twMy9GChqUEXkg",
-  "NwPnvTALYMNZgdiwHHkuAQ"
+  "7C4B2Skmh4X9f8xJDo9O4w",
+  "Lk70TsLeGBYSXsnr5q-cXg",
+  "ELcQDlf69kb-ihJfxZyL0A",
+  "f_5VRh79aew1cVWUmC1PJA",
+  "LPVSaUBvnSavuv_dgzrRSA",
+  "s76BDmBx_8kcxGFDiU6k_g",
+  "S-oatbN-h7SKiWwkTWw5QA",
+  "wTfb2nfzPIyFcYQArdPtuQ"
 ];
 
 // selectedUser={this.state.selectedUser}
@@ -35,24 +40,25 @@ class UserProfile extends Component {
 
     if (name === "user") {
       this.props.handleUserChange(val);
-      this.fetchUserInfo();
+      this.fetchUserInfo(val);
     }
   };
 
-  fetchUserInfo = () => {
+  fetchUserInfo = (user) => {
     console.log("CALLING FETCH USER");
     console.log(this.props.selectedUser);
     const session = driver.session();
     session
       .run(FETCH_USER_INFO_QUERY, {
-        userId: this.props.selectedUser
+        userId: user    //this.props.selectedUser
       })
       .then(result => {
+        console.log(result);
         const record = result.records[0];
         const userInfo = record.get("userInfo");
         this.setState({
           userInfo
-        });
+        }, ()=> {console.log(this.state)});
       })
       .catch(e => {
         console.log(e);

@@ -30,7 +30,7 @@
 * Mathematically, the coefficient is defined as the intersection divided by the smaller of the two groups.  
 {Visual of the circles - animate below}
 
-* For example, if set A contains {Orange, Blue, Green} and set B contains {Orange, Blue, Purple, Black} then the overlap algorithm counts 2 co-occurrences {Cyan, Blue} and divides that count by the number of items in the smallest set, in this case, 3.  The resulting overlap coefficient is 2/3 which is 0.66.
+* For example, if set A contains {Orange, Blue, Green} and set B contains {Orange, Blue, Purple, Black} then the overlap algorithm counts 2 co-occurrences {Orange, Blue} and divides that count by the number of items in the smallest set, in this case, 3.  The resulting overlap coefficient is 2/3 which is 0.66.
 * If A contains {Orange, Blue, PURPLE} then the overlap coefficient would be 1.
 * A coefficient of 1 indicates that either the groups are identical or more likely, that one is a subgroup of the other. 
 {Visual of the circles but now completely overlap. Animate?}
@@ -121,18 +121,18 @@
 
 * In the formula for PageRank, T1...Tn are the nodes with incomming links to u. We can see that the value of those nodes are divided by C - the parameter their own outgoing links.
 * A dampending factor, d, is added to help keep PR from getting dragged down into loops and tangents (and deadends). The dampending factor is the probably that the next step of the algorithm will follow a direct path. It's basically the opposite of a random skip to another node. 
-* For example, the standard dampening of 0.85 means on each next caluclation there is a 15% chance the algorithm will look at a random node, not directly connected to where it is at that moment. 
+* For example, the standard dampening of 0.85 means on each next calculation there is a 15% chance the algorithm will look at a random node, not directly connected to where it is at that moment. 
 * The dampending factor is how Personalized PageRank becomes, well, personalized. You see, intead of randomly skipping to node in the graph, in PPR, it will hop back to a particular set of nodes you identify.  This give us a look at the influence in the graph that's never too far way from our starting point. 
 * And of course, we can tailor our results by changing the dampending factor and the number of SourceNodes.
 
 {picture ?}
 
-* So we can see why PPR is particuliarly useful where you're looking for influential elements in an area surrounding a node. 
+* So we can see why PPR is particularly useful where you're looking for influential elements in an area surrounding a node. 
 * This approach is different from similarity algorithms that look for how common nodes of the same type are.
 * It's also different than community detection algorithms that are looking for groupings. 
 
 ==== Tips / Warnings? 
-* During the excercise, you may find bla blah [*Mark / Will* Maybe we add once we're almost done?] 
+* During the exercise, you may find bla blah [*Mark / Will* Maybe we add once we're almost done?] 
 * If you get stuck, you can always refer to our documentation:
 ** On the developers guide - https://neo4j.com/docs/developer-manual/current/ 
 ** On the Personalized PageRank Algorithm - https://neo4j.com/docs/graph-algorithms/3.4/algorithms/page-rank/
@@ -140,17 +140,34 @@
 
 ==== At The End of This Part
 * By the end of this section we will have updated the search results to highlight the Yelp businesses with good ratings from other users with a high personalized pageRank score for the user searching.
-* There will be a short quiz to evalute progress.
+* There will be a short quiz to evaluate progress.
 * You should be able to explain why PPR is used for recommendations and how it's different than PageRank itself. 
 * You may also want to familiarize yourself with how changing some parameters and source nodes can change your results. 
 
 
-=== Part 4: Photo based gallery recomendations
+=== Part 4: Photo based gallery recommendations
 
 ==== Problem Situation
 * Now we know everyone likes photos so we're going to have some fun with the pictures as a way to recommend other businesses.
-* Our hypothesis for this section is that similar photos get uploaded for similiar businesses. And we've taken the liberty of tagging photos of 30K Yelp reviews using Google's SOMETHING
-* Our challenge will be to enable users to select an image they like and then show them similarly tagged images.
+* Our hypothesis for this section is that similar photos get uploaded for similar businesses. 
+* Our goal is to enable users to select an image they like and then show them businesses with similarly images. The idea is to create photo based recommendations.
+* We've taken the liberty of tagging photos of 30K Yelp reviews using Google's SOMETHING
+* In this section we'll need to first identify photos that are similar and then group them. 
+
+==== Algorithm: Jaccard Similarity
+* The Jaccard similarity algorithm is often used to find recommendations of similar items as well as part of link prediction.
+* Jaccard provides a measure of the similarity between sets, which could be two nodes with their attributes compared.
+
+{Bubble Pictures with formula}
+* Mathematically, it's defined as the size of the intersection divided by the size of the union of two sets. Basically looking at the overlap of the two sets over the sum of those sets (minus the overlap to keep us from double counting.) 
+
+{New visual with below}
+For example, if set A contains {Orange, Blue, Green} and set B contains {Orange, Blue, Purple, Black} then the Jaccard algorithm counts 2 co-occurrences {Orange, Blue} and divides that count by the number of items in A and B (while not double-counting items), in this case 5 {Orange, Blue, Green, Purple, Black}.  The resulting Jaccard similarity coefficient is 2/5 which is 0.4.
+* A coefficient of 1 indicates that either the groups are identical.
+
+{Fade back to bubble and add in overlap}
+This is different than the Overlap Similarity which divides the intersection by the smaller of the two sets. 
+
 
 ==== Algorithm: LPA
 * The Label Propagation algorithm is a great choice for fast grouping at scale. 
@@ -180,5 +197,6 @@
 ==== At The End of This Part
 * By the end of this section we will have added a way to recommend similiar businesses based on the users picture preference.
 * There will be a short quiz to evalute progress.
-* You should understand what weights are used to assign labels for label propgation and how to avoid or correct an endless cycle.
-* You should also be familiar with why seed labels are sometimes used.
+* You should be able to explain the basic difference between Jaccard Similarity and Overlap Similarity
+* You should also understand how weights are used to assign labels for label propgation and why seed labels are sometimes used.
+
