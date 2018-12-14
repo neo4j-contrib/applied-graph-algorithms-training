@@ -30,7 +30,7 @@ Update the following query (copied from the documentation) to:
 [source, cypher]
 ----
 // Change this part of the query
-MATCH (p:Person)-[:LIKES]->(cuisine)
+MATCH (p:Person)-[likes:LIKES]->(cuisine)
 WITH {item:id(p), categories: collect(id(cuisine))} as userData
 
 WITH collect(userData) as data
@@ -105,4 +105,4 @@ ORDER BY count DESC
 LIMIT 10
 ----
 
-Now let's go back to our application and use these clusters to make photo recommendations.
+Now let's go back to our application and use these clusters to make business recommendations.

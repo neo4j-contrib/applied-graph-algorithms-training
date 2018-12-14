@@ -15,12 +15,14 @@ YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
 RETURN *
 ----
 
-And here's the answer:
+== Answer: User Similarity
+
+This is what the query should look like:
 
 [source,cypher]
 ----
 CALL algo.similarity.cosine(
-  "MATCH (u:User:Phoenix)
+  "MATCH (u:User)
    WITH u LIMIT 50000
    MATCH (u)-[:WROTE]->(review:Review)-[:REVIEWS]->(business:Business)
    RETURN id(u) AS item, id(business) AS id, review.stars AS weight",
