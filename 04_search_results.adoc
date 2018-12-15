@@ -31,6 +31,18 @@ YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
 RETURN *
 ----
 
+[source, cypher]
+----
+CALL algo.similarity.pearson.stream(
+ "MATCH (u:User)
+  WHERE size((u)-[:WROTE]->()) > 10 WITH u LIMIT 5000
+  MATCH (u)-[:WROTE]->(r)-[:REVIEWS]->(b)
+  RETURN id(u) AS item, id(b) AS category, r.stars as weight",
+  {graph: "cypher", skipValue: algo.NaN(), similarityCutoff: -1.0})
+YIELD item1, item2, count1, count2, similarity
+RETURN count(*)
+----
+
 We want to use this similarity graph to improve the reviews that we show on our application.
 We can find similar users by following the `SIMILAR` relationship from a user:
 

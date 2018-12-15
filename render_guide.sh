@@ -8,8 +8,8 @@ function render {
   # $GUIDES/run.sh index.adoc index.html +1 "$@"
   $GUIDES/run.sh 01_cypher_refresher.adoc 01_cypher_refresher.html +1 "$@"
   $GUIDES/run.sh 02_category_hierarchy.adoc 02_category_hierarchy.html +1 "$@"
-  $GUIDES/run.sh 03_search_results.adoc 03_search_results.html +1 "$@"
-  $GUIDES/run.sh 04_relevant_reviews.adoc 04_relevant_reviews.html +1 "$@"
+  $GUIDES/run.sh 03_relevant_reviews.adoc 03_relevant_reviews.html +1 "$@"
+  $GUIDES/run.sh 04_search_results.adoc 04_search_results.html +1 "$@"
   $GUIDES/run.sh 05_photo_recommendations.adoc 05_photo_recommendations.html +1 "$@"
 }
 
