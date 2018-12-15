@@ -2,45 +2,43 @@
 
 == Ordering Search Results
 
-In this section we'll learn how to use the Pearson Similarity algorithm to recommend reviews based on user similarity.
+We want to work out which users are similar to each other so that we can show more appropriate reviews at the top of the list.
+In this section we'll learn how to use the Pearson Similarity algorithm to do this.
+
+The Pearson Similarity algorithm takes into account not only the overall similarity between users, but also their relative similarity.
+
+== User Similarity
+
+The query below provides a template for computing the Pearson Similarity of users based on the businesses that they've reviewed.
+Update the query to:
+
+* Compute similarity between users based on the common businesses they've reviewed (Hint: you'll need to use the `WROTE` and `REVIEWS` relationships)
+* Choose a similarity cut off value (Hint: look at the `similarityCutOff` parameter)
+* Choose a topK value (Hint: look at the `topK` parameter)
+* Store the results in Neo4j (Hint: look at the `write` parameter)
 
 [source,cypher]
 ----
-CALL algo.similarity.cosine(
-  "// Fill in this part of the query
-   RETURN id(u) AS item, id(business) AS id, review.stars AS weight",
-  {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10,
-   skipValue: algo.NaN(), params: {city: "Phoenix"}})
-YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
-RETURN *
+CALL algo.similarity.pearson(
+  "MATCH (u:User)
+   WHERE size((u)-[:WROTE]->()) > 10
+   // Fill in this part of the query
+   RETURN id(u) AS item, id(business) AS category, review.stars AS weight",
+  {graph: "cypher", skipValue: algo.NaN})
 ----
 
 == Answer: User Similarity
 
 This is what the query should look like:
 
-[source,cypher]
-----
-CALL algo.similarity.cosine(
-  "MATCH (u:User)
-   WITH u LIMIT 50000
-   MATCH (u)-[:WROTE]->(review:Review)-[:REVIEWS]->(business:Business)
-   RETURN id(u) AS item, id(business) AS id, review.stars AS weight",
-  {graph: "cypher", similarityCutoff:0.5, degreeCutoff:3, write:true, topK:10, skipValue: algo.NaN())
-YIELD nodes, similarityPairs, min, max, mean, stdDev, p90, p95, p99
-RETURN *
-----
-
 [source, cypher]
 ----
-CALL algo.similarity.pearson.stream(
+CALL algo.similarity.pearson(
  "MATCH (u:User)
-  WHERE size((u)-[:WROTE]->()) > 10 WITH u LIMIT 5000
-  MATCH (u)-[:WROTE]->(r)-[:REVIEWS]->(b)
-  RETURN id(u) AS item, id(b) AS category, r.stars as weight",
-  {graph: "cypher", skipValue: algo.NaN(), similarityCutoff: -1.0})
-YIELD item1, item2, count1, count2, similarity
-RETURN count(*)
+  WHERE size((u)-[:WROTE]->()) > 10
+  MATCH (u)-[:WROTE]->(review)-[:REVIEWS]->(b)
+  RETURN id(u) AS item, id(b) AS category, review.stars as weight",
+  {graph: "cypher", topK: 5, skipValue: algo.NaN(), similarityCutoff: 0.1, write: true})
 ----
 
 We want to use this similarity graph to improve the reviews that we show on our application.
@@ -48,7 +46,7 @@ We can find similar users by following the `SIMILAR` relationship from a user:
 
 [source,cypher]
 ----
-MATCH (me:User {id: $userId})-[similarity:SIMILAR]-(other)
+MATCH (me:User {id: $userId})-[similarity:SIMILAR]->(other)
 RETURN other, similarity.score AS similarity
 ORDER BY similarity DESC
 ----
