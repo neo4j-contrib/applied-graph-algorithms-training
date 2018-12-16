@@ -24,16 +24,12 @@
 
 ==== Algorithm: Overlap Similarity
 * The Overlap Similarity algorithm is the perfect choice when we're trying to find the hierarchy in data and develop super and sub-categories. This is related to how it measures the overlap between two groups of nodes.  
+* Mathematically, the coefficient is defined as the intersection divided by the smaller of the two groups.
 * The algorithm provides a similarity coefficient that represents the co-occurrence of items between those groups. 
-{Visual of the Formula with A and B}
 
-* Mathematically, the coefficient is defined as the intersection divided by the smaller of the two groups.  
-{Visual of the circles - animate below}
-
-* For example, if set A contains {Orange, Blue, Green} and set B contains {Orange, Blue, Purple, Black} then the overlap algorithm counts 2 co-occurrences {Orange, Blue} and divides that count by the number of items in the smallest set, in this case, 3.  The resulting overlap coefficient is 2/3 which is 0.66.
-* If A contains {Orange, Blue, PURPLE} then the overlap coefficient would be 1.
+* For example, if set A contains {Orange, Banana, Cherry, Pineapple}  and set B contains {Orange, Banana, Apple} then the overlap algorithm counts 2 co-occurrences {Orange, Banana} and divides that count by the number of items in the smallest set, in this case, 3.  The resulting overlap coefficient is 2/3 which is 0.66.
+* If B contains {Orange, Banana, Cherry,} then the overlap coefficient would be 1.
 * A coefficient of 1 indicates that either the groups are identical or more likely, that one is a subgroup of the other. 
-{Visual of the circles but now completely overlap. Animate?}
 
 * Although the Overlap Similarity algorithm is also used to evaluate general similarities its use of the smaller set as a denominator makes its ideal for extracting subgroups. 
 ** Identification of multiple subgroups is an effective way to develop taxonomies.  
@@ -47,8 +43,8 @@
 
 ==== At The End of This Part
 * By the end of this section we will have updated the user navigation to reflect top-level categorizations of Yelp businesses.
-* There will be a short quiz to evalute progress.
 * You should be able to explain what the overlap coefficient represents and be familiar with using a NARROWER_THAN relationship to build a taxonomy.
+* There will be a short quiz to evalute progress.
 
 
 === Part 2: Ordering search results
