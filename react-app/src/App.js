@@ -126,9 +126,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedView: "BusinessSearch",
+      selectedView: "UserProfile",
       open: true,
-      selectedUser: "XEHZoTDWjw3w-gcQyYIe4g"
+      selectedUser: "7C4B2Skmh4X9f8xJDo9O4w"
     };
 
   
