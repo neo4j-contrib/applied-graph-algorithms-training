@@ -4,22 +4,35 @@
 === Quiz Part 1: Category Hierarchy Video
 
 ==== Algorithm Understanding: Overlap Similarity
-Question:
+
+Which of the following best describe the overlap similarity algorithm?
 
 Answers:
-* Blah
-* Blah
 
-Correct Answer: 
+* the size of the intersection divided by the size of the smaller of the two sets
+* the number of pairwise disagreements between two ranking lists
+* the size of the intersection divided by the size of the union of two sets
+* the minimum number of operations required to transform one string into the other
+
+Correct Answer:
+
+* the size of the intersection divided by the size of the smaller of the two sets
 
 ==== Matching Results
-Question:
+
+Which of these categories are top level categories i.e. they don't have any outgoing `NARROWER_THAN` relationships?
 
 Answers:
-* Blah
-* Blah
 
-Correct Answer: 
+* Shopping
+* Wine Bars
+* Doctors
+* Local Flavor
+
+Correct Answer:
+
+* Shopping
+* Local Flavor
 
 ==== Expectation Check
 Question:
@@ -37,7 +50,7 @@ Answers:
 * Blah
 * Blah
 
-Correct Answer: 
+Correct Answer:
 
 ==== Matching Results
 Question:
@@ -46,7 +59,7 @@ Answers:
 * Blah
 * Blah
 
-Correct Answer: 
+Correct Answer:
 
 ==== Expectation Check
 Question:
@@ -64,7 +77,7 @@ Answers:
 * Blah
 * Blah
 
-Correct Answer: 
+Correct Answer:
 
 ==== Matching Results
 Question:
@@ -73,7 +86,7 @@ Answers:
 * Blah
 * Blah
 
-Correct Answer: 
+Correct Answer:
 
 ==== Expectation Check
 Question:
@@ -91,7 +104,7 @@ Answers:
 * Blah
 * Blah
 
-Correct Answer: 
+Correct Answer:
 
 ==== Matching Results
 Question:
@@ -100,7 +113,7 @@ Answers:
 * Blah
 * Blah
 
-Correct Answer: 
+Correct Answer:
 
 ==== Expectation Check
 Question:
