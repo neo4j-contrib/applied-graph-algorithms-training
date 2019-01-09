@@ -5,7 +5,7 @@
 
 ==== Algorithm Understanding: Overlap Similarity
 
-Which of the following best describe the overlap similarity algorithm?
+Which of the following best describe what the Overlap Similarity algorithm computes?
 
 Answers:
 
@@ -44,15 +44,23 @@ Answers:
 === Quiz Part 2: Ordering search results
 
 ==== Algorithm Understanding: Pearson Similarity
-Question:
+
+Which of the following are valid values that can be returned by the Pearson Similarity algorithm?
 
 Answers:
-* Blah
-* Blah
+
+* 0.72
+* -3.41
+* 2.34
+* -0.52
 
 Correct Answer:
 
+* 0.72
+* -0.52
+
 ==== Matching Results
+
 Question:
 
 Answers:
@@ -70,14 +78,21 @@ Answers:
 
 === Quiz Part 3: Most relevant reviews
 
-==== Algorithm Understanding: LPA
-Question:
+==== Algorithm Understanding: Personalized PR
+
+Which of the following best describe the Personalized PageRank algorithm?
 
 Answers:
-* Blah
-* Blah
+
+* It measures similarity of the structural context in which objects occur, based on their relationships with other objects.
+* It's a variation of the PageRank algorithm that is biased towards a set of source nodes
+* It computes the influence of a node by measuring the number of the immediate neighbors and also all other nodes in the network that connect to the node under consideration through these immediate neighbors
+* It's a variation of the PageRank algorithm that reduces the bias that PageRank has towards assigning higher scores to nodes with relationships from nodes that have few outgoing relationships.
 
 Correct Answer:
+
+* It's a variation of the PageRank algorithm that is biased towards a set of source nodes
+
 
 ==== Matching Results
 Question:
@@ -97,14 +112,21 @@ Answers:
 
 === Quiz Part 4: Photo based gallery recomendations
 
-==== Algorithm Understanding: Personalized PR
-Question:
+==== Algorithm Understanding: LPA
+
+Which voting mechanism does Neo4j's Label Propagation algorithm use?
 
 Answers:
-* Blah
-* Blah
+
+* Random Walk Method
+* Pull Method
+* Push Method
+* Modularity Optimization Method
+
 
 Correct Answer:
+
+* Pull Method
 
 ==== Matching Results
 Question:
