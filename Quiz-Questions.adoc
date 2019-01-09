@@ -20,11 +20,18 @@ Correct Answer:
 
 ==== Running the algorithm in Neo4j
 
-Question:
+Which of the following parameters can be used to control the threshold for overlap similarity?
 
 Answers:
-* Blah
-* Blah
+
+* degreeCutoff
+* similarityCutoff
+* minimumSimilarity
+* topK
+
+Correct Answer:
+
+* similarityCutoff
 
 ==== Matching Results
 
@@ -135,7 +142,7 @@ Correct Answer:
 
 * Blah
 
-=== Quiz Part 4: Photo based gallery recomendations
+=== Quiz Part 4: Photo based gallery recommendations
 
 ==== Algorithm Understanding: LPA
 
