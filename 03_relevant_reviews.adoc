@@ -2,96 +2,12 @@
 
 == Finding relevant reviews
 
-We want to return relevant businesses in search results based not only on the search term, but also the user's context.
+We want to return relevant reviews for a business based on the user's context.
 In this section we'll learn how to use the Personalized PageRank algorithm to do this.
 
-== Answer: User <-> Business
+== Pre-load reviews graph
 
-This is what the query should look like:
-
-[source, cypher]
-----
-:params userId => "7C4B2Skmh4X9f8xJDo9O4w";
-
-MATCH (u:User {id: $userId})-[:FRIENDS]->(other)
-WITH collect(other) AS others
-UNWIND others as other
-MATCH (other)-[:WROTE]->()-[:REVIEWS]->(business)
-WITH collect(distinct business) AS businesses, others
-WITH others + businesses AS sourceNodes
-
-CALL algo.pageRank.stream(
-  'MATCH (u:User) RETURN id(u) AS id UNION MATCH (b:Business) RETURN id(b) AS id',
-  'MATCH (u:User)-[:WROTE]->(review)-[:REVIEWS]->(business)
-   RETURN id(u) AS source, id(business) AS target',
-  {iterations:20, dampingFactor:0.85, direction: "BOTH", sourceNodes: sourceNodes}
-)
-YIELD nodeId, score
-WITH algo.getNodeById(nodeId) AS node, score WHERE node:Business
-
-RETURN node.name AS page,score
-ORDER BY score DESC
-LIMIT 10
-----
-
-
-[source,cypher]
-----
-CALL algo.pageRank.stream(
-  'MATCH (u:User) RETURN id(u) AS id',
-  'MATCH (u:User)-[:WROTE]->()-[:REVIEWS]->()<-[:REVIEWS]-()<-[:WROTE]-(u2)
-   RETURN id(u) AS source, id(u2) AS target, count(*) AS weight',
-  {iterations:20, dampingFactor:0.85, direction: "BOTH", graph: "cypher"}
-)
-YIELD nodeId, score
-WITH algo.getNodeById(nodeId) AS node, score
-
-RETURN node.name AS page,score
-ORDER BY score DESC
-LIMIT 10
-----
-
-[source,cypher]
-----
-CALL algo.pageRank.stream(
-  'MATCH (u:User) RETURN id(u) AS id',
-  'MATCH (u:User)-[:WROTE]->()-[:REVIEWS]->()<-[:REVIEWS]-()<-[:WROTE]-(u2)
-   RETURN id(u) AS source, id(u2) AS target, count(*) AS weight',
-  {iterations:20, dampingFactor:0.85, direction: "BOTH", graph: "cypher"}
-)
-YIELD nodeId, score
-WITH algo.getNodeById(nodeId) AS node, score
-
-RETURN node.name AS page,score
-ORDER BY score DESC
-LIMIT 10
-----
-
-[source, cypher]
-----
-:params userId => "k70TsLeGBYSXsnr5q-cXg";
-:params userId => "Lk70TsLeGBYSXsnr5q-cXg";
-
-MATCH (u:User {id: $userId})-[:WROTE]->()-[:REVIEWS]->()<-[:REVIEWS]-()<-[:WROTE]-(other)
-WITH other, count(*) AS count
-WHERE count > 1
-WITH collect(other) AS sourceNodes
-
-CALL algo.pageRank.stream(
-  'MATCH (u:User) RETURN id(u) AS id',
-  'MATCH (u:User)-[:WROTE]->()-[:REVIEWS]->()<-[:REVIEWS]-()<-[:WROTE]-(u2)
-   RETURN id(u) AS source, id(u2) AS target, count(*) AS weight',
-  {iterations:20, dampingFactor:0.85, direction: "BOTH", graph: "cypher", sourceNodes: sourceNodes}
-)
-YIELD nodeId, score
-WITH algo.getNodeById(nodeId) AS node, score
-
-RETURN node.name AS page,score
-ORDER BY score DESC
-LIMIT 10
-----
-
-We'll pre-load the in memory graph using the following query:
+We'll pre-load the in memory graph using the following query as we want to run the algorithm multiple times for different users:
 
 [source, cypher]
 ----
@@ -102,7 +18,14 @@ CALL algo.graph.load('review-graph',
   {graph:'cypher', direction: "BOTH"});
 ----
 
-And now we'll execute the Personalized PageRank algorithm:
+[source, cypher]
+----
+:params userId => "Lk70TsLeGBYSXsnr5q-cXg";
+----
+
+== Answer: User <-> Business
+
+This is what the answer should look like:
 
 [source,cypher]
 ----
@@ -133,6 +56,8 @@ MERGE (u)-[trust:TRUSTS]->(node)
 SET trust.score = score
 ----
 
+== Find trusted users
+
 Now we can find the other users that our user trusts by executing the following query:
 
 [source,cypher]
@@ -140,4 +65,23 @@ Now we can find the other users that our user trusts by executing the following 
 match (u:User {id: $userId})-[trusts:TRUSTS]->(other)
 RETURN other.name, other.id, trusts.score AS score
 ORDER BY score DESC
+----
+
+== Using the trust score
+
+We can then use it like this:
+
+[source, cypher]
+----
+:params businessId => "jzM4dTlstNmGDPRT9SC6Hw";
+:params userId => "Lk70TsLeGBYSXsnr5q-cXg";
+
+
+MATCH (b:Business {id: $businessId})
+MATCH (user:User {id: $userId})
+OPTIONAL MATCH (b)<-[:REVIEWS]-(r:Review)<-[:WROTE]-(u:User)
+OPTIONAL MATCH (u)<-[trusts:TRUSTS]-(user)
+WITH r{.text, stars: toFloat(r.stars), name: u.name, date: toString(r.date), trustScore: trusts.score} AS review
+ORDER BY trusts.score, r.date DESC LIMIT 1000
+RETURN COLLECT(review) AS reviews
 ----
