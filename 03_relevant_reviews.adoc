@@ -91,6 +91,8 @@ ORDER BY score DESC
 LIMIT 10
 ----
 
+We'll pre-load the in memory graph using the following query:
+
 [source, cypher]
 ----
 CALL algo.graph.load('review-graph',
@@ -100,43 +102,33 @@ CALL algo.graph.load('review-graph',
   {graph:'cypher', direction: "BOTH"});
 ----
 
-
-[source, cypher]
-----
-MATCH (u:User {id: $userId})-[:WROTE]->()-[:REVIEWS]->()<-[:REVIEWS]-()<-[:WROTE]-(other)
-WITH other, count(*) AS count
-WHERE count > 1
-WITH collect(other) AS sourceNodes
-
-CALL algo.pageRank.stream(null, null,
-  {iterations:5, dampingFactor:0.85, direction: "BOTH", graph: "review-graph", sourceNodes: sourceNodes}
-)
-YIELD nodeId, score
-WITH algo.getNodeById(nodeId) AS node, score
-
-RETURN node.name AS page,score
-ORDER BY score DESC
-LIMIT 10
-----
-
+And now we'll execute the Personalized PageRank algorithm:
 
 [source,cypher]
 ----
+// Compute source nodes
 MATCH (u:User {id: $userId})-[:WROTE]->()-[:REVIEWS]->()<-[:REVIEWS]-()<-[:WROTE]-(other)
 WITH u, other, count(*) AS count
 WHERE count > 1
 WITH u, collect(other) AS sourceNodes
 
+// Execute the PageRank algorithm
 CALL algo.pageRank.stream(null, null, {
   iterations:5, dampingFactor:0.85, direction: "BOTH",
   graph: "review-graph", sourceNodes: sourceNodes
 })
+
+// Only keep users that have a PageRank score bigger than the default
 YIELD nodeId, score
 WITH u, algo.getNodeById(nodeId) AS node, score
 WHERE score > 0.15 AND node <> u
+
+// Keep up to 50 users
 WITH u, node, score
 ORDER BY score DESC
 LIMIT 50
+
+// Create a relationship between our user and the influential users
 MERGE (u)-[trust:TRUSTS]->(node)
 SET trust.score = score
 ----
