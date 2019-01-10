@@ -94,7 +94,7 @@ WITH u, node, score
 ORDER BY score DESC
 LIMIT 50
 
-// Create a relationship between our user and the influential users
+// Create a relationship between our user (u) and the influential users (node)
 MERGE (u)-[trust:TRUSTS]->(node)
 SET trust.score = score
 ----
