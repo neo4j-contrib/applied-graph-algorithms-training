@@ -2,7 +2,7 @@
 
 == Ordering Search Results
 
-We want to work out which users are similar to each other so that we can show more appropriate reviews at the top of the list.
+We want to work out which users are similar to each other so that we can show more appropriate businesses at the top of the list.
 In this section we'll learn how to use the Pearson Similarity algorithm to do this.
 
 The Pearson Similarity algorithm takes into account not only the overall similarity between users, but also their relative similarity.
@@ -52,4 +52,4 @@ ORDER BY similarity DESC
 ----
 
 Now let's update the application to use this new information.
-Instead of selecting the reviews for our businesses based on the opinions of users unrelated to `user-name`, we'll show reviews written by similar users.
+Instead of selecting our businesses based on the opinions of users unrelated to `user-name`, we'll show ones reviewed by similar users.
