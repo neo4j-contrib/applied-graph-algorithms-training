@@ -101,6 +101,10 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 :play https://guides.neo4j.com/sandbox/applied_graph_algorithms/02_category_hierarchy
 ----
 
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/blhsQNQySi0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
 == Part 2: Ordering search results
 
 ++++
