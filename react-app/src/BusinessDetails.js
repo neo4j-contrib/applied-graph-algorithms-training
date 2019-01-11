@@ -59,7 +59,8 @@ class BusinessDetails extends Component {
     const session = driver.session();
     session
       .run(FETCH_REVIEWS_QUERY, {
-        businessId: this.props.business.id
+        businessId: this.props.business.id,
+        userId: this.props.selectedUser
       })
       .then(result => {
         const record = result.records[0];

@@ -230,6 +230,7 @@ class BusinessSearch extends Component {
             business={this.state.selectedBusiness}
             open={this.state.showBusiness}
             handleClose={this.handleClose}
+            selectedUser={this.props.selectedUser}
           />
         ) : null}
       </div>
