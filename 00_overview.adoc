@@ -73,6 +73,10 @@ This CodeSandbox contains all the code for the application that we'll be buildin
 
 https://codesandbox.io/embed/github/neo4j-contrib/applied-graph-algorithms-training/tree/master/react-app[Launch CodeSandbox^]
 
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NK3yC1cSlVU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
 == Part 1: Category Hierarchy
 
 ++++
