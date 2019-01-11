@@ -31,6 +31,15 @@ It’s a great showcase for graph algorithms that you can also download and expl
 
 *Put something here for them to click through so we can approve the use of the dataset*
 
+We'll be using Neo4j Browser guides to help us work through this course. These guides allow us to embed content and Cypher queries in Neo4j Browser. Once you've created your Neo4j Sandbox instance, open the first guide running following command into the query pane of the Neo4j Browser:
+
+[source,cypher]
+----
+:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/01_cypher_overview
+----
+
+Work through the guide to see how to use Cypher to explore the dataset. When you've completed it, pick up in this document where you left off.
+
 Now that we're familiar with the data, let's have a brief overview of graph algorithms and what we can do with them.
 
 == Graph Algorithms
@@ -44,8 +53,9 @@ We have 4 types of graph algorithms:
 
 The first 3 are classic graph algorithms and the 4th can be used on its own or in combination with the other 3.
 
-AMY:
-*maybe we can put an overview video here?*
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/11qo8dmLzH4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
 
 == Building our own yelp.com
 
@@ -63,7 +73,15 @@ This CodeSandbox contains all the code for the application that we'll be buildin
 
 https://codesandbox.io/embed/github/neo4j-contrib/applied-graph-algorithms-training/tree/master/react-app[Launch CodeSandbox^]
 
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NK3yC1cSlVU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
 == Part 1: Category Hierarchy
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Urb6RcpOL_c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
 
 In this section we're going to navigate business categories.
 Let's first have a look at the part of the application that we're going to build.
@@ -83,7 +101,15 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 :play https://guides.neo4j.com/sandbox/applied_graph_algorithms/02_category_hierarchy
 ----
 
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/blhsQNQySi0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
 == Part 2: Ordering search results
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/mYEGxMScovM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
 
 In this section we're going to improve the display of search results.
 Let's have  a look at the part of the application that we're going to build.
@@ -104,7 +130,15 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 Now let's update the application to use this new information.
 Instead of selecting the reviews for our businesses based on the opinions of users unrelated to `user-name`, we'll show reviews written by similar users.
 
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ILRjVzBcIVU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
 == Part 3: Most relevant reviews
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jztUXGRazvY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
 
 In this section we'll learn how to use the Personalized PageRank algorithm to return relevant businesses in search results.
 
@@ -117,6 +151,10 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 ----
 
 == Part 4: Photo based gallery recomendations
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/m0GrcuM8yvg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
 
 In this section we'll learn how to use the Label Propagation algorithm to recommend photos.
 

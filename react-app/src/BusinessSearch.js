@@ -107,7 +107,8 @@ class BusinessSearch extends Component {
     session
       .run(FETCH_BUSINESSES_QUERY, {
         category: this.state.category,
-        searchText: this.state.searchText
+        searchText: this.state.searchText,
+        userId: this.props.selectedUser
       })
       .then(result => {
         const record = result.records[0];

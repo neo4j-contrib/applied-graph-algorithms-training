@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Paper, TextField, MenuItem } from "@material-ui/core";
+import { Paper, Select, MenuItem } from "@material-ui/core";
 import classNames from "classnames";
 import { driver } from "./neo4j";
 import { FETCH_USER_INFO_QUERY } from "./exercises/exercise0";
 
 const styles = theme => ({});
 const userPersonas = [
-  "7C4B2Skmh4X9f8xJDo9O4w",
-  "Lk70TsLeGBYSXsnr5q-cXg",
-  "ELcQDlf69kb-ihJfxZyL0A",
-  "f_5VRh79aew1cVWUmC1PJA",
-  "LPVSaUBvnSavuv_dgzrRSA",
-  "s76BDmBx_8kcxGFDiU6k_g",
-  "S-oatbN-h7SKiWwkTWw5QA",
-  "wTfb2nfzPIyFcYQArdPtuQ"
+  {id: "7C4B2Skmh4X9f8xJDo9O4w", name: "Dolores"},
+  {id: "Lk70TsLeGBYSXsnr5q-cXg", name: "Layne"},
+  {id: "ELcQDlf69kb-ihJfxZyL0A", name: "Brad"},
+  {id: "f_5VRh79aew1cVWUmC1PJA", name: "Leah"},
+  {id: "LPVSaUBvnSavuv_dgzrRSA", name: "Nick"},
+  {id: "s76BDmBx_8kcxGFDiU6k_g", name: "Louis"},
+  {id: "S-oatbN-h7SKiWwkTWw5QA", name: "Jackson"},
+  {id: "wTfb2nfzPIyFcYQArdPtuQ", name: "PrincessCandyEmpire"}
 ];
 
 // selectedUser={this.state.selectedUser}
@@ -32,7 +32,7 @@ class UserProfile extends Component {
         averageStars: 0.0
       }
     };
-    this.fetchUserInfo();
+    this.fetchUserInfo(props.selectedUser);
   }
 
   handleChange = name => event => {
@@ -74,23 +74,21 @@ class UserProfile extends Component {
     return (
       <div>
         <Paper>
-          <form className="classes.container" noValidate authComplete="off">
-            <TextField
+          <form className="classes.container">
+            <Select
               id="select-user"
-              select
-              className={classes.textField}
+              
               value={this.props.selectedUser}
               onChange={this.handleChange("user")}
               helperText="Please select your user persona"
-              margin="normal"
               variant="outlined"
             >
               {userPersonas.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
+                <MenuItem key={option.id} value={option.id} selected={this.props.selectedUser.id === option.id ? true : false} >
+                  {option.name}
                 </MenuItem>
               ))}
-            </TextField>
+            </Select>
           </form>
         </Paper>
 
