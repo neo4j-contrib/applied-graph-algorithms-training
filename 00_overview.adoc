@@ -37,7 +37,7 @@ Once you've created your Neo4j Sandbox instance, open the first guide running fo
 
 [source,cypher]
 ----
-:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/01_cypher_overview
+:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/01_cypher_refresher.html
 ----
 
 [NOTE]
@@ -107,7 +107,7 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 
 [source, cypher]
 ----
-:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/02_category_hierarchy
+:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/02_category_hierarchy.html
 ----
 
 [NOTE]
@@ -139,7 +139,7 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 
 [source, cypher]
 ----
-:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/03_search_results
+:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/03_search_results.html
 ----
 
 [NOTE]
@@ -171,7 +171,7 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 
 [source, cypher]
 ----
-:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/04_relevant_reviews
+:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/04_relevant_reviews.html
 ----
 
 [NOTE]
@@ -200,7 +200,7 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 
 [source, cypher]
 ----
-:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/04_relevant_reviews
+:play https://guides.neo4j.com/sandbox/applied_graph_algorithms/05_photo_recommendations.html
 ----
 
 [NOTE]
