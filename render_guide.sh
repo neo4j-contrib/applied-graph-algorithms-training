@@ -17,7 +17,7 @@ function render {
 if [ "$1" == "publish" ]; then
   URL=guides.neo4j.com/sandbox/applied_graph_algorithms
   render http://$URL -a env-training -a img=https://$URL/images
-  s3cmd put --recursive -P *.html img s3://${URL}/
+  s3cmd put --recursive -P *.html images s3://${URL}/
   s3cmd put -P index.html s3://${URL}
   echo "Publication Done"
 else
