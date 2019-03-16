@@ -31,12 +31,21 @@ It’s a great showcase for graph algorithms that you can also download and expl
 
 *Put something here for them to click through so we can approve the use of the dataset*
 
-We'll be using Neo4j Browser guides to help us work through this course. These guides allow us to embed content and Cypher queries in Neo4j Browser. Once you've created your Neo4j Sandbox instance, open the first guide running following command into the query pane of the Neo4j Browser:
+We'll be using Neo4j Browser guides to help us work through this course.
+These guides allow us to embed content and Cypher queries in Neo4j Browser.
+Once you've created your Neo4j Sandbox instance, open the first guide running following command into the query pane of the Neo4j Browser:
 
 [source,cypher]
 ----
 :play https://guides.neo4j.com/sandbox/applied_graph_algorithms/01_cypher_overview
 ----
+
+[NOTE]
+====
+.Useful Resources
+
+* https://neo4j.com/docs/cypher-refcard/current/[Cypher Cheatsheet^]
+====
 
 Work through the guide to see how to use Cypher to explore the dataset. When you've completed it, pick up in this document where you left off.
 
@@ -101,6 +110,13 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 :play https://guides.neo4j.com/sandbox/applied_graph_algorithms/02_category_hierarchy
 ----
 
+[NOTE]
+====
+.Useful Resources
+
+* https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity-overlap/[Overlap Similarity^]
+====
+
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/blhsQNQySi0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ++++
@@ -126,6 +142,14 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 :play https://guides.neo4j.com/sandbox/applied_graph_algorithms/03_search_results
 ----
 
+[NOTE]
+====
+.Useful Resources
+
+* https://neo4j.com/docs/graph-algorithms/current/introduction/#_graph_loading[Graph Loading^]
+* https://neo4j.com/docs/graph-algorithms/current/algorithms/page-rank/[PageRank^]
+====
+
 
 Now let's update the application to use this new information.
 Instead of selecting the reviews for our businesses based on the opinions of users unrelated to `user-name`, we'll show reviews written by similar users.
@@ -150,6 +174,13 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 :play https://guides.neo4j.com/sandbox/applied_graph_algorithms/04_relevant_reviews
 ----
 
+[NOTE]
+====
+.Useful Resources
+
+* https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity/[Similarity Algorithms^]
+====
+
 === Solution
 
 ++++
@@ -171,3 +202,16 @@ Copy the following command into the query pane of the Neo4j Browser and execute 
 ----
 :play https://guides.neo4j.com/sandbox/applied_graph_algorithms/04_relevant_reviews
 ----
+
+[NOTE]
+====
+.Useful Resources
+
+* https://neo4j.com/docs/graph-algorithms/current/algorithms/label-propagation/[Label Propagation^]
+====
+
+=== Solution
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WxJRuYpQLiQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
