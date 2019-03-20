@@ -30,8 +30,7 @@ ORDER BY numberOfReviews DESC
 LIMIT 10;
 ----
 
-Las Vegas, Phoenix, and Toronto have the majority of reviews so we'll use one of those so that we have plenty of data to work with.
-We'll use Phoenix because $REASONS.
+The Yelp Public dataset contains data from a sampling of cities, but we'll contain our analysis to businesses in the Phoenix area.
 
 == Cypher Refresher: Most Reviewed Restaurants
 
@@ -86,7 +85,7 @@ MATCH (u:User)-[:WROTE]->()-[:REVIEWS]->(business:Business)-[:IN_CATEGORY]->(cat
 WHERE u.id IN $userIds AND (business)-[:IN_CITY]->(:City {name: "Phoenix"})
 WITH u, category, count(*) AS count
 ORDER BY u, count DESC
-RETURN u, collect({category: category.name, count: count})[..5] AS reviews;
+RETURN u {.*} AS user, collect({category: category.name, count: count})[..5] AS reviews;
 ----
 
 Now that we're familiar with the data, let's go back to the Graph Academy Page and learn about Graph Algorithms and the application that we're going to build.

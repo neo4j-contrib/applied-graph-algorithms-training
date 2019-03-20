@@ -89,7 +89,7 @@ This is what the query should look like:
 
 [source, cypher]
 ----
-CALL algo.labelPropagation("Photo", "SIMILAR", {direction: "BOTH"})
+CALL algo.labelPropagation("Photo", "SIMILAR","BOTH")
 ----
 
 == Explore photo clusters

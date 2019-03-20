@@ -30,7 +30,7 @@ We're going to run the algorithm in the context of a specific user, so let's fir
 
 [source, cypher]
 ----
-:params userId => "Lk70TsLeGBYSXsnr5q-cXg";
+:params userId => "Lk70TsLeGBYSXsnr5q-cXg"
 ----
 
 The query below provides a template for computing Personalized PageRank for our user, where the `sourceNodes` are the users who have reviewed more than one same business as our user.
